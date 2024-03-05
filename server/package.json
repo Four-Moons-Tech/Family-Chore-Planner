@@ -1,0 +1,25 @@
+{
+    "name": "family-chore-planner",
+    "version": "1.0.0",
+    "description": "A MERN program to help families plan chores",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js",
+      "watch": "nodemon"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+      "@apollo/server": "^4.7.1",
+      "bcrypt": "^5.0.0",
+      "express": "^4.17.2",
+      "graphql": "^16.6.0",
+      "jsonwebtoken": "^8.5.1",
+      "mongoose": "^7.0.2"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.3"
+    }
+  }
+  
