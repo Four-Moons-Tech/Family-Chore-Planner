@@ -1,13 +1,18 @@
 const { Schema, model } = require('mongoose');
-const choresSchema = require('./Chores')
+const childUserSchema = require('./ChildUser')
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
     {
         username: {
             type: String,
             required: true,
-            //unique: true,
+            unique: true,
             trim: true
+        },
+        password: {
+            type: String,
+            required: true
         },
         lastName: {
             type: String,
@@ -15,27 +20,12 @@ const userSchema = new Schema(
         },
         email: {
             type: String,
-            required: true,
-            unique: true,
+            match: [/.+@.+\..+/, 'Must match an email address!'],
             //Must match a valid email address
         },
-        role: {
-            type: Selection,
-            required: true,
-        },
-        children: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "User",
-                // child_id: 
-                chores: [
-                    {
-                        type: Schema.Types.ObjectId,
-                        ref: "Chores",
-                    }
-                ],
-            }
-        ]
+    
+        children: [ childUserSchema]
+        
     },
     {
         toJSON: {
@@ -45,11 +35,24 @@ const userSchema = new Schema(
     }
 );
 
+userSchema.pre('save', async function (next) {
+    if (this.isNew || this.isModified('password')) {
+      const saltRounds = 10;
+      this.password = await bcrypt.hash(this.password, saltRounds);
+    }
+  
+    next();
+  });
+  
+  userSchema.methods.isCorrectPassword = async function (password) {
+    return bcrypt.compare(password, this.password);
+  };
+
 userSchema.virtual('childrenCount').get(function () {
     return this.children.length;
 });
 
-userSchema.virtual('ChoreCount').get(function () {
+userSchema.virtual('choreCount').get(function () {
     return this.children.chores.length;
 });
 
