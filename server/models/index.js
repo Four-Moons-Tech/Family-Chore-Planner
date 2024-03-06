@@ -1,4 +1,5 @@
 const User = require('./User');
-const Chores = require('./Chores');
+const choreSchema = require('./Chore');
+const childUserSchema = require('./ChildUser')
 
-module.exports = { User, Chores };
+module.exports = { User, childUserSchema, choreSchema };
