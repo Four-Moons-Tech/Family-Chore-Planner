@@ -1,8 +1,12 @@
 const { Schema, model, default: mongoose, Types } = require('mongoose');
 
 
-const choresSchema = new Schema(
+const choreSchema = new Schema(
     {
+        choreId: {
+            type: Schema.Types.ObjectId,
+            default: ()=> new Types.ObjectId()
+        },
         description: {
             type: String,
             required: true,
@@ -23,12 +27,8 @@ const choresSchema = new Schema(
         complete: {
             type: Boolean,
             default: false
-
         },    
-        child_id: {
-            type: String,
-            required: true,
-        },
+        
     },
     {   
         timestamps: true,
@@ -43,5 +43,5 @@ const choresSchema = new Schema(
 
 
 
-const Chores = model('Chores', choresSchema);
-module.exports = Chores
+
+module.exports = choreSchema
