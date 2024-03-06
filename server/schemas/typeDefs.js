@@ -4,8 +4,16 @@ const typeDefs = `
     username: String
     lastName: String
     email: String
-    role: Selection
+    password: String
     children: [User]
+    
+  }
+
+  type ChildUser {
+    _id: ID
+    childUsername: String
+    password: String
+    chores: [Chore]
     
   }
 
@@ -25,26 +33,48 @@ const typeDefs = `
     # child_id: 
   }
 
-  type Auth {
+  input UserInput {
+    username: String!
+    lastName: String!
+    email: String!
+    password: String!
+  }
+
+   input ChildUserInput {
+    childUsername: String!
+    password: String! 
+  }
+
+  type UserAuth {
     token: ID!
     user: User
   }
+
+  type ChildAuth {
+    token: ID!
+    user: ChildUser
+  }
+  
 
   type Query {
     me: User
     user(username: String): User
     users: [User]
-    children: [User]
-    # check on that
-    chores(username: String): [Chore]
+    childUser (childUsername: String): ChildUser
+    childUsers: [ChildUser]
+    children (username: String) :[ChildUser]
+    chores(childUsername: String): [Chore]
     chore(choreId: ID!): Chore
   }
 
   type Mutation {
-    addUser(username: String!, password: String!): Auth
-    login(username: String!, password: String!): Auth
+    addUser(input: UserInput): UserAuth
+    addChildUser(input: ChildUserInput): ChildAuth
+    userLogin(email: String!, password: String!): UserAuth
+    childUserLogin(username: String!,password: String! ): ChildAuth
     addChore(input: ChoreInput ): Chore
     completeChore(choreId: ID!): Chore
+ 
     
   }
 `;
