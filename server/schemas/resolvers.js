@@ -71,9 +71,19 @@ const resolvers = {
     completeChore: async (parent, { choreId }) => {
       const chore = await Chore.findOneAndUpdate(
         { _id: choreId },
-        { complete: true }
+        { complete: true },
+        { new: true }
       )
       return chore
+    },
+
+    updateUser: async (parent, { input }) => {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: input._id },
+        input,
+        { new: true }
+      )
+      return updatedUser
     }
     
   },

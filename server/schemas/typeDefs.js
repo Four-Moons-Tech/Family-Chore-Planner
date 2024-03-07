@@ -6,6 +6,7 @@ const typeDefs = `
     email: String!
     password: String
     role: String!
+    profileImage: String
     children: [User]
     chores: [Chore]
     
@@ -31,6 +32,7 @@ const typeDefs = `
     lastName: String!
     email: String!
     password: String!
+    profileImage: String
   }
 
   type Auth {
@@ -52,6 +54,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addChore(input: ChoreInput ): Chore
     completeChore(choreId: ID!): Chore 
+    updateUser(input: UserInput): User
 
   }
 `;
