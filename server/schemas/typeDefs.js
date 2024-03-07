@@ -5,7 +5,7 @@ const typeDefs = `
     lastName: String
     email: String
     password: String
-    children: [User]
+    children: [ChildUser]
     
   }
 
@@ -21,7 +21,7 @@ const typeDefs = `
     choreId: ID
     description: String!
     payRate: Float!
-    dueDate: Date!
+    dueDate: String!
     complete: Boolean
     # child_id: 
   }
@@ -29,7 +29,7 @@ const typeDefs = `
   input ChoreInput{
     description: String!
     payRate: Float!
-    dueDate: Date!
+    dueDate: String!
     # child_id: 
   }
 
