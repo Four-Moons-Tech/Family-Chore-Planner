@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
-const childUserSchema = require('./ChildUser')
+const choreSchema = require('./Chore')
+
 const bcrypt = require('bcrypt');
+
 
 const userSchema = new Schema(
     {
@@ -12,7 +14,8 @@ const userSchema = new Schema(
         },
         password: {
             type: String,
-            required: true
+            required: true,
+            minlength: 8,
         },
         lastName: {
             type: String,
@@ -20,12 +23,25 @@ const userSchema = new Schema(
         },
         email: {
             type: String,
+            unique: true,
             match: [/.+@.+\..+/, 'Must match an email address!'],
-            //Must match a valid email address
+            
         },
-    
-        children: [ childUserSchema]
-        
+        role: {
+            type: String,
+            required: true,
+            default: "Parent",
+        },
+
+        children: [{
+
+
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        }],
+
+        chores: [choreSchema]
+
     },
     {
         toJSON: {
@@ -37,25 +53,41 @@ const userSchema = new Schema(
 
 userSchema.pre('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
-      const saltRounds = 10;
-      this.password = await bcrypt.hash(this.password, saltRounds);
+        const saltRounds = 10;
+        this.password = await bcrypt.hash(this.password, saltRounds);
     }
-  
+
     next();
-  });
-  
-  userSchema.methods.isCorrectPassword = async function (password) {
+});
+
+userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
-  };
+};
+
+// userSchema.virtual('parent', {
+//     ref: 'User',
+//     localField: '_id',
+//     foreignField: 'Parent',
+// })
 
 userSchema.virtual('childrenCount').get(function () {
     return this.children.length;
 });
 
 userSchema.virtual('choreCount').get(function () {
-    return this.children.chores.length;
+    return this.chores.length;
 });
 
+userSchema.virtual('totalEarnings').get(function () {
+
+    return this.chores.reduce(function (total, chore) {
+        if (chore.complete) {
+            total += chore.payRate
+        }
+        return total
+    }, 0)
+
+})
 
 const User = model('user', userSchema);
 
