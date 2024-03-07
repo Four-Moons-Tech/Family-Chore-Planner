@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Box } from "@chakra-ui/react";
 // import { Navbar, Nav, Container, Modal, Tab } from '@chakra-ui/react';
 import SignUpForm from '../SignupForm';
 import LoginForm from '../LoginForm';
@@ -11,11 +12,13 @@ const AppNavbar = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/login">Log in</Link>
+    <Box display="flex" justifyContent="center">
+      <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
+      <Link to="/login"style={{ marginRight: '1rem' }}>Log in</Link>
       <Link to="/signup">Sign up</Link>
-    </nav>
+      </Box>
+
+    
     // <>
     //   <Navbar bg='dark' variant='dark' expand='lg'>
     //     <Container fluid>
