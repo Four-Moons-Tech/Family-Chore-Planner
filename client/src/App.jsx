@@ -5,6 +5,7 @@ import Signup from './pages/Signup.jsx'
 import Profile from './pages/Profile.jsx'
 import FamilyProfile from './pages/FamilyProfile.jsx'
 import ChildProfile from './pages/ChildProfile.jsx'
+
 import { Route, Routes } from 'react-router-dom'
 
 import {
@@ -14,7 +15,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-i
+
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -54,7 +55,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/child-profile" element={<ChildProfile />} />
           <Route path="/family-profile" element={<FamilyProfile />} />
-          <Route path="/family-calendar" element={<FamilyCalendar />} />
+          
         </Routes>
       </main>
     </ApolloProvider>
