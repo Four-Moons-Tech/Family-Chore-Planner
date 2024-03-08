@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 
 const ChildList = ({
   child,
-  title,
-  showTitle = true,
+  name,
+//   reference choreList component
+  chore,
+  showName = true,
+  showChore = true,
   showUsername = true,
 }) => {
   if (!child.length) {
@@ -12,9 +15,9 @@ const ChildList = ({
 
   return (
     <div>
-      {showTitle && <h3>{title}</h3>}
+      {showName && <h3>{name}</h3>}
       {child &&
-        child.map((thought) => (
+        child.map((child) => (
           <div key={child._id} className="card mb-3">
             <h4 className="card-header bg-primary text-light p-2 m-0">
               {showUsername ? (
