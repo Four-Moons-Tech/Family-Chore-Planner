@@ -32,13 +32,17 @@ const userSchema = new Schema(
             required: true,
             default: "Parent",
         },
+        profileImage:{
+            type: String
 
-        children: [{
+        },
 
-
+        children: [
+        {
             type: Schema.Types.ObjectId,
             ref: 'User',
-        }],
+        },
+    ],
 
         chores: [choreSchema]
 
@@ -63,12 +67,6 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
-
-// userSchema.virtual('parent', {
-//     ref: 'User',
-//     localField: '_id',
-//     foreignField: 'Parent',
-// })
 
 userSchema.virtual('childrenCount').get(function () {
     return this.children.length;

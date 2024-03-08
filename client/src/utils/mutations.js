@@ -25,9 +25,6 @@ export const ADD_USER = gql`
   }
 `;
 
-
- 
-
 export const ADD_CHORE = gql`
   mutation addChore($description: String!,$payRate:Number, $dueDate: Date, $child_id: ID ){
     addChore(description: $description, payRate: $payRate, dueDate: $dueDate, childId:$child_id ){
@@ -35,6 +32,10 @@ export const ADD_CHORE = gql`
       description
       payRate
       dueDate
+    }
+    }
+  
+`;
 
 
 export const COMPLETE_CHORE = gql`
@@ -47,5 +48,19 @@ export const COMPLETE_CHORE = gql`
   }
 `;
 
+export const UPDATE_USER = gql`
+  mutation updatedUser(input: UserInput) {
+    updatedUser(input: $input) {
+      _id
+      username
+      lastName
+      email
+      password
+      role
+      profileImage
+      
+    }
+  }
+`;
 
 
