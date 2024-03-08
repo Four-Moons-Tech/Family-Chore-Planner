@@ -49,7 +49,7 @@ export const COMPLETE_CHORE = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation updatedUser(input: UserInput) {
+  mutation updatedUser($input: UserInput) {
     updatedUser(input: $input) {
       _id
       username
