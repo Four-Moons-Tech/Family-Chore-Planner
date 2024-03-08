@@ -14,7 +14,7 @@ export const QUERY_USER = gql`
         password
         goal
       }
-      chore{
+      chore {
         choreId
         description
         dueDate

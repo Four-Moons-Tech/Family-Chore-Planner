@@ -2,8 +2,21 @@
 import React, { useState } from 'react';
 import { Box, Button, Stack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
 import Confetti from 'react-confetti'; // Import Confetti component for fireworks effect
+import { useQuery } from '@apollo/client';
+import { QUERY_USER } from '../utils/queries';
+// https://www.apollographql.com/docs/react/data/queries
+import ProfileAvatar from '../components/Content/ProfileAvatar';
 
 const ChildProfile = () => {
+    /*
+        We need Sign up and Login
+        const { loading, error, data } = useQuery(QUERY_USER, {
+            variables: {
+                // Who's logged in?
+                username: ""
+            }
+        })
+    */
     const [showSelectModal, setShowSelectModal] = useState(false);
     const [existingChores, setExistingChores] = useState([
         { id: 1, name: "Wash Dishes", time: "30 minutes", completed: false },
@@ -64,6 +77,7 @@ const ChildProfile = () => {
         <Box className="flex-row justify-center mb-4">
             <Box className="col-12 col-lg-10">
                 <Text as="h4" className="card-header bg-dark text-light p-2">Child Profile</Text>
+                <ProfileAvatar />
                 <Box p="4">
                     <Stack spacing={3}>
                         {/* Display existing chores */}

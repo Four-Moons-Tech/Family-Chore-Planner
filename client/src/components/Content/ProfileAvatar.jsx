@@ -12,6 +12,7 @@ import { useQuery } from "@apollo/client";
 
 const ProfileAvatar = function () {
     const [image, setImage] = useState("")
+    const [imageChosen, setImageChosen] = useState("")
     const [imageCrop, setImageCrop] = useState(false)
     const [src, setsrs] = useState(false)
     const [profile, setProfile] = useState([]);
@@ -32,9 +33,23 @@ const ProfileAvatar = function () {
     const readFile = (file) => {
         const reader = new FileReader()
         reader.onload = (e) => {
-            setImage(e.target.result)
+            let imgData = e.target.result
+            setImage(imgData)
+            setImageChosen(true)
+
         }
         reader.readAsDataURL(file)
+    }
+    const updateProfileImage = () => {
+            // when the user clicks "save", set the user's avatar to image
+            /*
+                const [updateUser, {data, loading, error}] = useMutation(UPDATE_USER)
+
+                updateUser({
+                    _id: "id goes here",
+                    profileImage: "image goes here"
+                })
+            */
     }
     return (
         <div>
@@ -101,8 +116,11 @@ const ProfileAvatar = function () {
                         }}
 
                     />
-
-
+                    {imageChosen && (
+                        <button onClick={updateProfileImage}>
+                            Save
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
