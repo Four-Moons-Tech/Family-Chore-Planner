@@ -24,7 +24,7 @@ const ChildList = ({
                 >
                   {child.childAuthor} <br />
                   <span style={{ fontSize: '1rem' }}>
-                    had this thought on {thought.createdAt}
+                    had this child on {child.createdAt}
                   </span>
                 </Link>
               ) : (
