@@ -8,7 +8,7 @@
 
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_USER } from '../utils/mutations';
+import { ADD_USER } from '../utils/mutations';
 import {
     Box,
     Button,
@@ -21,7 +21,7 @@ import {
 
 const FamilyProfile = () => {
     const [formState, setFormState] = useState({ username: '', password: '' });
-    const [createUser, { error, data }] = useMutation(CREATE_USER);
+    const [createUser, { error, data }] = useMutation(ADD_USER);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
