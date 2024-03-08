@@ -15,7 +15,8 @@ const AppNavbar = () => {
     <Box display="flex" justifyContent="center">
       <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
       <Link to="/login"style={{ marginRight: '1rem' }}>Log in</Link>
-      <Link to="/signup">Sign up</Link>
+      <Link to="/signup">Sign upstyle={{ marginRight: '1rem' }}</Link>
+      <Link to="/child-profile">My profile</Link>
       </Box>
 
     
