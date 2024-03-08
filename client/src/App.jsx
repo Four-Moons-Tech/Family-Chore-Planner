@@ -3,6 +3,8 @@ import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Profile from './pages/Profile.jsx'
+import FamilyProfile from './pages/FamilyProfile.jsx'
+import ChildProfile from './pages/ChildProfile.jsx'
 import { Route, Routes } from 'react-router-dom'
 
 import {
@@ -12,7 +14,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import ChildProfile from './pages/ChildProfile.jsx'
+i
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
