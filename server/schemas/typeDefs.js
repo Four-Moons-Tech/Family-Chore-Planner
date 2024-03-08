@@ -34,6 +34,16 @@ const typeDefs = `
     password: String!
     profileImage: String
   }
+  
+  # this updates a user; that's why the _id is the only on that's required
+  input UserUpdateInput {
+    _id: ID!
+    username: String
+    lastName: String
+    email: String
+    password: String
+    profileImage: String
+  }
 
   type Auth {
     token: ID!
@@ -54,7 +64,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addChore(input: ChoreInput ): Chore
     completeChore(choreId: ID!): Chore 
-    updateUser(input: UserInput): User
+    updateUser(input: UserUpdateInput): User
 
   }
 `;

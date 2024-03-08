@@ -46,10 +46,16 @@ const resolvers = {
     },
 
 
-    addUser: async (parent, { userInput }) => {
-      const user = await User.create(userInput);
-      const token = signToken(user);
-      return { token, user };
+    addUser: async (parent, { input }) => {
+      try {
+        console.log("new user:", input)
+        const user = await User.create(input);
+        const token = signToken(user);
+        return { token, user };
+      } catch (error) {
+        console.log("Failure adding user", error)
+        throw new Error("Failure adding user")
+      }
     },
 
     

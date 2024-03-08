@@ -10,8 +10,11 @@ const Signup = () => {
         username: '',
         email: '',
         password: '',
+        lastName: ''
     });
-    const [addUser, { error, data }] = useMutation(ADD_USER);
+    const [addUser, { error, data, loading }] = useMutation(ADD_USER);
+    if (loading) console.log("Loading...")
+    if (error) console.log(`Submission error! ${error.message}`, error.graphQLErrors)
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -73,6 +76,16 @@ const Signup = () => {
                                     name="password"
                                     type="password"
                                     value={formState.password}
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Last Name</FormLabel>
+                                <Input
+                                    placeholder="last name"
+                                    name="lastName"
+                                    type="text"
+                                    value={formState.lastName}
                                     onChange={handleChange}
                                 />
                             </FormControl>
