@@ -1,106 +1,137 @@
-//Profile view for a child user:
 
-//Is abe to login using the username and password creted by a parent
-//Is able to select the chores from the list they see in the profile
-
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
-import Auth from '../utils/auth';
-import {
-    Box,
-    Button,
-    FormControl,
-    FormLabel,
-    Input,
-    Stack,
-    Text,
-} from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { Box, Button, Stack, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
+import Confetti from 'react-confetti'; // Import Confetti component for fireworks effect
 
 const ChildProfile = () => {
-    const [formState, setFormState] = useState({ username: '', password: '' });
-    const [login, { error, data }] = useMutation(LOGIN_USER);
+    const [showSelectModal, setShowSelectModal] = useState(false);
+    const [existingChores, setExistingChores] = useState([
+        { id: 1, name: "Wash Dishes", time: "30 minutes", completed: false },
+        { id: 2, name: "Clean Room", time: "1 hour", completed: false },
+        { id: 3, name: "Take out Trash", time: "15 minutes", completed: false }
+    ]);
+    const [selectedChores, setSelectedChores] = useState([]);
+    const [newChoreAdded, setNewChoreAdded] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false); // State to control Confetti display
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormState({
-            ...formState,
-            [name]: value,
-        });
+    // data for available chores, need to add more
+    const availableChoresData = [
+        { id: 4, name: "Feed Pets", time: "20 minutes" },
+        { id: 5, name: "Water Plants", time: "10 minutes" },
+        { id: 6, name: "Vacuum Floor", time: "45 minutes" }
+    ];
+
+    //  handles opening the modal to select chores
+    const openSelectModal = () => {
+        setShowSelectModal(true);
     };
 
-    const handleFormSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const { data } = await login({
-                variables: { ...formState },
-            });
-            Auth.login(data.login.token);
-        } catch (e) {
-            console.error(e);
-        }
-        setFormState({
-            username: '',
-            password: '',
+    //  handlse closing the modal to select chores
+    const closeSelectModal = () => {
+        setShowSelectModal(false);
+    };
+
+    //  handles adding a chore to selected chores
+    const addChore = (chore) => {
+        setSelectedChores([...selectedChores, chore]);
+        setNewChoreAdded(true);
+    };
+
+    // handles marking a chore as completed
+    const completeChore = (choreId) => {
+        setShowConfetti(true); // Show confetti 
+        setTimeout(() => setShowConfetti(false), 3000);
+        
+        // Update the chore status 
+        const updatedChores = existingChores.map(chore => {
+            if (chore.id === choreId) {
+                return { ...chore, completed: true };
+            }
+            return chore;
         });
+        
+        setExistingChores(updatedChores);
+    };
+
+    //  handles saving selected chores to existing chores
+    const saveSelectedChores = () => {
+        setExistingChores([...existingChores, ...selectedChores]);
+        setSelectedChores([]);
+        setShowSelectModal(false);
     };
 
     return (
         <Box className="flex-row justify-center mb-4">
             <Box className="col-12 col-lg-10">
-                <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-                    <Text as="h4" className="card-header bg-dark text-light p-2">Child Login</Text>
-                    <Box p="4">
-                        {data ? (
-                            <Text>
-                                Success! You may now head{' '}
-                                <Link to="/">back to the homepage.</Link>
-                            </Text>
-                        ) : (
-                            <form onSubmit={handleFormSubmit}>
-                                <Stack spacing={3}>
-                                    <FormControl>
-                                        <FormLabel htmlFor="username">Username</FormLabel>
-                                        <Input
-                                            id="username"
-                                            name="username"
-                                            type="text"
-                                            value={formState.username}
-                                            onChange={handleChange}
-                                        />
-                                    </FormControl>
-                                    <FormControl>
-                                        <FormLabel htmlFor="password">Password</FormLabel>
-                                        <Input
-                                            id="password"
-                                            name="password"
-                                            type="password"
-                                            value={formState.password}
-                                            onChange={handleChange}
-                                        />
-                                    </FormControl>
-                                    <Button
-                                        type="submit"
-                                        colorScheme="blue"
-                                        size="lg"
-                                        isLoading={false}
-                                        loadingText="Submitting"
-                                        style={{ cursor: 'pointer' }}
-                                    >
-                                        Submit
+                <Text as="h4" className="card-header bg-dark text-light p-2">Child Profile</Text>
+                <Box p="4">
+                    <Stack spacing={3}>
+                        {/* Display existing chores */}
+                        <Text fontWeight="bold">Existing Chores:</Text>
+                        {existingChores.map((chore) => (
+                            <Box key={chore.id}>
+                                <Text style={{ color: chore.completed ? 'grey' : 'black' }}>
+                                    {chore.name} - {chore.time}
+                                </Text>
+                                {!chore.completed && (
+                                    <Button colorScheme="blue" onClick={() => completeChore(chore.id)}>
+                                        Completed
                                     </Button>
-                                </Stack>
-                            </form>
-                        )}
-                        {error && (
-                            <Box mt={3} p={3} bg="red.500" color="white">
-                                {error.message}
+                                )}
                             </Box>
-                        )}
-                    </Box>
+                        ))}
+                        {/* Button to open modal to select chores */}
+                        <Button colorScheme="blue" size="lg" onClick={openSelectModal}>
+                            Select Chores
+                        </Button>
+                    </Stack>
                 </Box>
             </Box>
+            {/* Modal to select chores */}
+            <Modal isOpen={showSelectModal} onClose={closeSelectModal}>
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Select Chores</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        {/*  available chores and allow selection */}
+                        <Stack spacing={3}>
+                            {/* when new chore is added */}
+                            {newChoreAdded && (
+                                <Text color="green">You've added a new chore!</Text>
+                            )}
+                            <Text fontWeight="bold">Available Chores:</Text>
+                            {availableChoresData.map((chore) => (
+                                <Box key={chore.id}>
+                                    <Text>{chore.name} - {chore.time}</Text>
+                                    <Button colorScheme="green" onClick={() => addChore(chore)}>
+                                        Add
+                                    </Button>
+                                </Box>
+                            ))}
+                        </Stack>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button colorScheme="blue" mr={3} onClick={closeSelectModal}>
+                            Close
+                        </Button>
+                        <Button colorScheme="green" onClick={saveSelectedChores}>
+                            Save
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+            {/* Confetti component */}
+            {showConfetti && <Confetti />}
+            {/* Display "completed" button for each selected chore */}
+            {selectedChores.map((chore) => (
+                <Box key={chore.id} mt={4}>
+                    <Text>{chore.name} - {chore.time}</Text>
+                    <Button colorScheme="blue" onClick={() => completeChore(chore.id)}>
+                        Completed
+                    </Button>
+                </Box>
+            ))}
         </Box>
     );
 };
