@@ -13,11 +13,12 @@
     "@apollo/client": "^3.9.5",
     "@chakra-ui/react": "^2.8.2",
     "jwt-decode": "^4.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.2",
     "primereact": "^10.5.1",
-    "react-avatar-edit": "^1.2.0"
+    "react": "^18.2.0",
+    "react-avatar-edit": "^1.2.0",
+    "react-confetti": "^6.1.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

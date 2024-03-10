@@ -6,14 +6,14 @@ const resolvers = {
     users: async () => {
       return User.find().populate('chores');
     },
-    user: async (parent, { username }) => {
-      return User.findOne({ username }).populate('chores');
+    user: async (parent, { email }) => {
+      return User.findOne({ email }).populate('chores');
     },
 
-    chore: async (parent, { role}) => {
-      const params = role ? { role } : {};
-      return Chore.find(params).sort({ createdAt: -1 }).filter({complete:false});
-    },
+    // chore: async (parent, { role}) => {
+    //   const params = role ? { role } : {};
+    //   return Chore.find(params).sort({ createdAt: -1 }).filter({complete:false});
+    // },
     chore: async (parent, { choreId }) => {
       return Chore.findOne({ _id: choreId });
     },
@@ -27,8 +27,8 @@ const resolvers = {
   },
 
   Mutation: {
-    login: async (parent, { username, password }) => {
-      const user = await User.findOne({ username });
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
 
       if (!user) {
         throw AuthenticationError;
@@ -46,15 +46,15 @@ const resolvers = {
     },
 
 
-    addUser: async (parent, { input }) => {
+    addUser: async (parent, { username, email, password, lastName }) => {
       try {
-        console.log("new user:", input)
-        const user = await User.create(input);
+        console.log("new user:", username, email, password, lastName);
+        const user = await User.create({username, email, password, lastName});
         const token = signToken(user);
         return { token, user };
       } catch (error) {
-        console.log("Failure adding user", error)
-        throw new Error("Failure adding user")
+        console.log("Failure adding user", error);
+        throw new Error("Failure adding user");
       }
     },
 

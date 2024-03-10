@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const choreSchema = require('./Chore')
+const choreSchema = require('./Chore');
 
 const bcrypt = require('bcrypt');
 
@@ -19,22 +19,20 @@ const userSchema = new Schema(
         },
         lastName: {
             type: String,
-            required: true,
+            // required: true,
         },
         email: {
             type: String,
             unique: true,
             match: [/.+@.+\..+/, 'Must match an email address!'],
-            
         },
         role: {
             type: String,
-            required: true,
+            // required: true,
             default: "Parent",
         },
         profileImage:{
             type: String
-
         },
 
         children: [
@@ -89,4 +87,4 @@ userSchema.virtual('totalEarnings').get(function () {
 
 const User = model('user', userSchema);
 
-module.exports = User
+module.exports = User;
