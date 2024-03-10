@@ -10,11 +10,13 @@ const Signup = () => {
         username: '',
         email: '',
         password: '',
-        lastName: ''
+        lastName: '',
     });
     const [addUser, { error, data, loading }] = useMutation(ADD_USER);
-    if (loading) console.log("Loading...")
-    if (error) console.log(`Submission error! ${error.message}`, error.graphQLErrors)
+    
+    if (loading) console.log("Loading...");
+
+    if (error) console.log(`Submission error! ${error.message}`, error.graphQLErrors);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -30,10 +32,13 @@ const Signup = () => {
         console.log(formState);
 
         try {
+            console.log(Auth.login);
+
             const { data } = await addUser({
                 variables: { ...formState },
             });
-
+            console.log(data);
+            
             Auth.login(data.addUser.token);
         } catch (e) {
             console.error(e);

@@ -29,7 +29,7 @@ const typeDefs = `
 
   input UserInput {
     username: String!
-    lastName: String!
+    lastName: String
     email: String!
     password: String!
     profileImage: String
@@ -60,7 +60,7 @@ const typeDefs = `
   }
 
   type Mutation {
-    addUser(input: UserInput): Auth
+    addUser(username: String!, email: String!, password: String!, lastName: String!): Auth
     login(email: String!, password: String!): Auth
     addChore(input: ChoreInput ): Chore
     completeChore(choreId: ID!): Chore 

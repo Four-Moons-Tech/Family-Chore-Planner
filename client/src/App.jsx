@@ -7,6 +7,7 @@ import FamilyProfile from './pages/FamilyProfile.jsx'
 import ChildProfile from './pages/ChildProfile.jsx'
 
 import { Route, Routes } from 'react-router-dom'
+import { Outlet } from 'react-router-dom';
 
 import {
   ApolloClient,
@@ -48,7 +49,8 @@ function App() {
         <Navbar />
       </header>
       <main>
-        <Routes>
+        <Outlet />
+        {/* <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -56,7 +58,7 @@ function App() {
           <Route path="/child-profile" element={<ChildProfile />} />
           <Route path="/family-profile" element={<FamilyProfile />} />
           
-        </Routes>
+        </Routes> */}
       </main>
     </ApolloProvider>
   );
