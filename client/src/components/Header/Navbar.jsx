@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from "@chakra-ui/react";
 // import { Navbar, Nav, Container, Modal, Tab } from '@chakra-ui/react';
-import SignUpForm from '../SignupForm';
-import LoginForm from '../LoginForm';
+// import SignUpForm from '../SignupForm';
+// import LoginForm from '../LoginForm';
 
 // import Auth from '../../utils/auth';
 
