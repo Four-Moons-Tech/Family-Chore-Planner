@@ -9,24 +9,57 @@ import Footer from '../components/Footer';
 //   )
 // }
 import React from 'react';
-import { Box } from "@chakra-ui/react";
+import { Box, Image, useMediaQuery, useColorModeValue } from "@chakra-ui/react";
+import {motion, useAnimation } from "framer-motion";
 import { Link } from 'react-router-dom';
 
 const Home = () => {
+
+  const [isMobile] = useMediaQuery("(max-width: 480px)");
+  const controls = useAnimation();
+
+  const popUpVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 1.5 } },
+  };
+
+  React.useEffect(() => {
+    controls.start("visible");
+  }, [controls]);
+  
+  const textColor = useColorModeValue("blue.800", "blue.300");
+
   return (
     <div>
-      {/* <Box display="flex" justifyContent="center">
-        <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
-        <Link to="/login"style={{ marginRight: '1rem' }}>Log in</Link>
-        <Link to="/signup"style={{ marginRight: '1rem' }}>Sign up</Link>
-        <Link to="/child-profile">My profile</Link>
-      </Box> */}
-
-      <div style={{ width: '100%', height: '100vh', overflow: 'hidden' }}>
+      <Box 
+        position='relative'
+        width='100%'
+        height={isMobile ? "50vh" : "100vh"}
+        overflow='hidden'
+        >
         {/* Your hero image */}
-        <img src="/images/iStock-1398315874.jpg" alt="Hero" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-      </div>
-
+        <Image src="/images/iStock-1398315874.jpg" alt="Hero"  objectFit= 'cover' w="100%" h="100%"/>
+        <Box
+        position="absolute"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+        textAlign="center"
+        >
+        <motion.div
+            initial="hidden"
+            animate={controls}
+            variants={popUpVariants}
+            transform="translate(-50%, -50%)"
+            textAlign="center"
+            fontWeight="bold"
+            fontSize={isMobile ? "2rem" : ["20vw", "30vw", "40vw"] + " !important"}
+            color= {textColor + " !important"}
+          >
+            Family Chore Planner
+          </motion.div>
+        </Box>
+      </Box>
       {/* Your content */}
       <div>
         {/* Add your content here */}
