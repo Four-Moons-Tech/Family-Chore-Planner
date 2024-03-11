@@ -23,7 +23,7 @@ const userSchema = new Schema(
         },
         email: {
             type: String,
-            unique: true,
+            // unique: true,
             match: [/.+@.+\..+/, 'Must match an email address!'],
         },
         role: {
@@ -36,11 +36,11 @@ const userSchema = new Schema(
         },
 
         children: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-        },
-    ],
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            },
+        ],
 
         chores: [choreSchema]
 

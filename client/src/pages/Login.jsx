@@ -19,6 +19,11 @@ import {
 const Login = (props) => {
     const [formState, setFormState] = useState({ email: '', password: '' });
     const [login, { error, data }] = useMutation(LOGIN_USER);
+    const [errorDisplay, setErrorDisplay] = useState('')
+    if (error) {
+        console.log("Error logging in:", error.message)
+        setErrorDisplay(error.message)
+    }
 
     // update state based on form input changes
     const handleChange = (event) => {
@@ -33,7 +38,7 @@ const Login = (props) => {
     // submit form
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log(formState);
+        console.log("formState:", formState);
         try {
             const { data } = await login({
                 variables: { ...formState },

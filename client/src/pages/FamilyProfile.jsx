@@ -10,25 +10,28 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import AddChildProfile from '../components/Content/AddChildsProfile';
-// import {
-//     Box,
-//     Button,
-//     FormControl,
-//     FormLabel,
-//     Input,
-//     Stack,
-//     Text,
-//     ModalOverlay,
-//     ModalContent,
-//     ModalHeader,
-//     ModalFooter,
-//     ModalBody,
-//     ModalCloseButton,
-// } from "@chakra-ui/react";
+import ChildCard from '../components/Content/ChildCard';
+import { 
+    useDisclosure,
+    Button
+} from '@chakra-ui/react'
+
 
 const FamilyProfile = () => {
-    
-    <AddChildProfile/>
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    return (
+        <>    
+            <Button onClick={onOpen}>Create Child User</Button>
+            <AddChildProfile 
+                isOpen={isOpen}
+                onClose={onClose}
+            />
+            <ChildCard/>
+        </>
+    )
+   
 
 
     // const [formState, setFormState] = useState({ username: '', password: '' });

@@ -1,23 +1,32 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from "@chakra-ui/react";
-// import { Navbar, Nav, Container, Modal, Tab } from '@chakra-ui/react';
-// import SignUpForm from '../SignupForm';
-// import LoginForm from '../LoginForm';
 
-// import Auth from '../../utils/auth';
+
+import Auth from '../../utils/auth';
 
 const AppNavbar = () => {
   // set modal display state
   const [showModal, setShowModal] = useState(false);
+  console.log(Auth.getProfile())
 
   return (
     <Box display="flex" justifyContent="center">
+      {Auth.loggedIn() ? (
+        <>
+          <button style={{ marginRight: '1rem' }} onClick={Auth.logout}>
+            Sign out
+          </button>
+        </>
+      ):(
+        <>
+          <Link to="/login" style={{ marginRight: '1rem' }}>Log in</Link>
+          <Link to="/signup" style={{ marginRight: '1rem' }}>Sign up</Link>
+        </>
+      )}
       <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
-      <Link to="/login"style={{ marginRight: '1rem' }}>Log in</Link>
-      <Link to="/signup"style={{ marginRight: '1rem' }}>Sign up</Link>
       <Link to="/child-profile">My profile</Link>
-      </Box>
+    </Box>
 
     
     // <>
