@@ -50,11 +50,14 @@ const Home = () => {
             initial="hidden"
             animate={controls}
             variants={popUpVariants}
-            transform="translate(-50%, -50%)"
-            textAlign="center"
-            fontWeight="bold"
-            fontSize={isMobile ? "2rem" : ["20vw", "30vw", "40vw"] + " !important"}
-            color= {textColor + " !important"}
+           style={{
+            transform:"translate(-50%, -50%)",
+            fontWeight:"bold",
+            fontSize: "clamp(2rem, 5vw, 5rem)",
+            color: "blue.800",
+            opacity: 1,
+            textAlign:"center"
+           }}
           >
             Family Chore Planner
           </motion.div>

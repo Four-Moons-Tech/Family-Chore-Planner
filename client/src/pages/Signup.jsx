@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -13,95 +14,56 @@ const Signup = () => {
         lastName: '',
     });
     const [addUser, { error, data, loading }] = useMutation(ADD_USER);
-    
+
     if (loading) console.log("Loading...");
 
     if (error) console.log(`Submission error! ${error.message}`, error.graphQLErrors);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-
-        setFormState({
-            ...formState,
-            [name]: value,
-        });
+        setFormState({ ...formState, [name]: value });
     };
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log("signup formState:", formState);
-
         try {
-            console.log(Auth.login);
-
-            const { data } = await addUser({
-                variables: { ...formState },
-            });
-            console.log("data from addUser:", data);
-            
+            const { data } = await addUser({ variables: { ...formState } });
             Auth.login(data.addUser.token);
         } catch (e) {
-            console.log("Error signing up")
             console.error(e);
         }
     };
 
     return (
-        <Box width="100%" display="flex" justifyContent="center" mb="4">
-            <VStack width="100%" maxWidth="lg">
-                <Box bg="gray.100" p="6" borderRadius="md" boxShadow="md">
-                    <Text fontSize="xl" fontWeight="bold" mb="4">Sign Up</Text>
-                    {data ? (
-                        <Text mb="4">Success! You may now head <Link to="/">back to the homepage.</Link></Text>
-                    ) : (
-                        <form onSubmit={handleFormSubmit}>
-                            <FormControl>
+        <Box display="flex" justifyContent="center" minH="100vh">
+            <VStack spacing={4} maxWidth="lg" width="100%" p={8} borderWidth="1px" borderRadius="lg" boxShadow="lg">
+                <Text fontSize="2xl" fontWeight="bold">Sign Up</Text>
+                {data ? (
+                    <Text>Success! You may now head <Link to="/">back to the homepage.</Link></Text>
+                ) : (
+                    <form onSubmit={handleFormSubmit}>
+                        <VStack spacing={4}>
+                            <FormControl isRequired>
                                 <FormLabel>Username</FormLabel>
-                                <Input
-                                    placeholder="Your username"
-                                    name="username"
-                                    type="text"
-                                    value={formState.username}
-                                    onChange={handleChange}
-                                />
+                                <Input name="username" type="text" value={formState.username} onChange={handleChange} />
                             </FormControl>
-                            <FormControl>
+                            <FormControl isRequired>
                                 <FormLabel>Email</FormLabel>
-                                <Input
-                                    placeholder="Your email"
-                                    name="email"
-                                    type="email"
-                                    value={formState.email}
-                                    onChange={handleChange}
-                                />
+                                <Input name="email" type="email" value={formState.email} onChange={handleChange} />
                             </FormControl>
-                            <FormControl>
+                            <FormControl isRequired>
                                 <FormLabel>Password</FormLabel>
-                                <Input
-                                    placeholder="******"
-                                    name="password"
-                                    type="password"
-                                    value={formState.password}
-                                    onChange={handleChange}
-                                />
+                                <Input name="password" type="password" value={formState.password} onChange={handleChange} />
                             </FormControl>
-                            <FormControl>
+                            <FormControl isRequired>
                                 <FormLabel>Last Name</FormLabel>
-                                <Input
-                                    placeholder="last name"
-                                    name="lastName"
-                                    type="text"
-                                    value={formState.lastName}
-                                    onChange={handleChange}
-                                />
+                                <Input name="lastName" type="text" value={formState.lastName} onChange={handleChange} />
                             </FormControl>
-                            <Button mt="4" colorScheme="blue" type="submit">Submit</Button>
-                        </form>
-                    )}
-                    {error && (
-                        <Text mt="4" color="red.600">{error.message}</Text>
-                    )}
-                </Box>
+                            <Button colorScheme="blue" size="lg" type="submit" width="full">Submit</Button>
+                        </VStack>
+                    </form>
+                )}
+                {error && <Text color="red.500">{error.message}</Text>}
             </VStack>
         </Box>
     );
