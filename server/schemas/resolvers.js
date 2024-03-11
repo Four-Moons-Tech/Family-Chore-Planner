@@ -81,24 +81,28 @@ const resolvers = {
         // const token = signToken(user);
         return { parent, child };
       } catch (error) {
-        console.log("Failure adding user", error);
-        throw new Error("Failure adding user");
+        console.log("Failure adding child user", error);
+        throw new Error("Failure adding child user");
       }
     },
 
 
-    addChore: async (parent, { choreInput }, context) => {
-      if (context.User) {
+    addChore: async (parent, { choreInput, userId }) => {
+      try {
         const chore = await Chore.create(choreInput);
 
-        await User.findOneAndUpdate(
-          { _id: context.User._id },
-          { $addToSet: { chores: chore._id } }
+        const userWithChores = await User.findOneAndUpdate(
+          { _id: userId },
+          { $push: { chores: chore._id } },
+          { new: true }
         );
 
-        return chore;
+        return userWithChores;
+
+      } catch (error) {
+        console.log(error)
       }
-      throw AuthenticationError;
+      
     },
     
     completeChore: async (parent, { choreId }) => {
