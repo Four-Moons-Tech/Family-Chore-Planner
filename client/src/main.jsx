@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       }, {
-        path: '/child-profile/:username',
+        path: '/child-profile',
         element: <ChildProfile />
       }, {
         path: '/me',

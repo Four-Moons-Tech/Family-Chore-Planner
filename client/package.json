@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.9.5",
     "@chakra-ui/react": "^2.8.2",
+    "framer-motion": "^11.0.8",
     "jwt-decode": "^4.0.0",
     "primereact": "^10.5.1",
     "react": "^18.2.0",

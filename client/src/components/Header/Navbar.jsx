@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { Box } from "@chakra-ui/react";
+
+import { Flex, Breadcrumb, BreadcrumbItem, Box } from "@chakra-ui/react";
+import { ChevronRightIcon} from "@chakra-ui/icons"
+import { IoChevronForwardCircleOutline } from 'react-icons/io5';
+
+
+// import { Navbar, Nav, Container, Modal, Tab } from '@chakra-ui/react';
+// import SignUpForm from '../SignupForm';
+// import LoginForm from '../LoginForm';
+
 
 
 import Auth from '../../utils/auth';
@@ -11,6 +22,7 @@ const AppNavbar = () => {
   console.log(Auth.getProfile())
 
   return (
+
     <Box display="flex" justifyContent="center">
       {Auth.loggedIn() ? (
         <>
@@ -28,9 +40,51 @@ const AppNavbar = () => {
       <Link to="/child-profile">My profile</Link>
     </Box>
 
-    
+    <Flex justifyContent="center" fontSize="lg" fontWeight="bold" padding="1rem" backgroundColor="gray.100" boxShadow="md">
+      <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
+        <BreadcrumbItem>
+        <Box
+          as ={Link}to="/"
+          _hover={{ color: "blue.500" }}
+          style={{ marginRight: '1rem', color: 'gray.600', textDecoration: 'none' }}>
+            Home
+            </Box>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+        <Box
+        as ={Link} to ="/login"
+        _hover={{ color: "blue.500" }}
+        style={{ marginRight: '1rem', color: 'gray.600', textDecoration: 'none' }}>
+          Log in
+          </Box>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem>
+        <Box
+        as ={Link} to="/signup"
+        _hover={{ color: "blue.500" }}
+         style={{ marginRight: '1rem', color: 'gray.600', textDecoration: 'none' }}>
+          Sign up
+          </Box>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem isCurrentPage>
+          <Box
+          as ={Link} to="/child-profile"
+          _hover={{ color: "blue.500" }}
+           style={{ color: 'gray.600', textDecoration: 'none' }}>
+            My profile
+            </Box>
+        </BreadcrumbItem>
+      </Breadcrumb>
+    </Flex>
+
+
+
+
     // <>
-    //   <Navbar bg='dark' variant='dark' expand='lg'>
+    /* //   <Navbar bg='dark' variant='dark' expand='lg'>
     //     <Container fluid>
     //       <Navbar.Brand as={Link} to='/'>
     //         Google Books Search
@@ -39,7 +93,7 @@ const AppNavbar = () => {
     //       <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
     //         <Nav className='ml-auto d-flex'>
     //           <Nav.Link as={Link} to='/'>
-    //             Search For Books
+    //             Search For Books */
     //           </Nav.Link>
     //           {/* if user is logged in show saved books and logout */}
     //           {Auth.loggedIn() ? (
