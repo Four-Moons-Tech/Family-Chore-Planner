@@ -34,6 +34,9 @@ const userSchema = new Schema(
         profileImage:{
             type: String
         },
+        goal:{
+            type: String, 
+        },
 
         children: [
             {

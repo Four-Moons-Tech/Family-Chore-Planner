@@ -18,13 +18,15 @@ const typeDefs = `#graphql
     payRate: Float!
     dueDate: String!
     complete: Boolean
+    userId: ID
     
   }
 
   input ChoreInput{
     description: String!
     payRate: Float!
-    dueDate: String!  
+    dueDate: String! 
+    user_id: ID 
   }
 
   
@@ -49,7 +51,7 @@ const typeDefs = `#graphql
     user(username: String!): User
     users: [User]
     children:[User]
-    chores(username: String ): [Chore]
+    chores(userId: ID ): [Chore]
     chore(choreId: ID!): Chore
   }
 
@@ -58,11 +60,16 @@ const typeDefs = `#graphql
     child: User
   }
 
+  type UserWithChores {
+    chore: Chore
+    user: User
+  }
+
   type Mutation {
     addUser(username: String!, email: String!, password: String!, lastName: String!): Auth
     addChild(username: String!, email: String!, password: String!, parent_id: ID!): ParentAndChild
     login(email: String!, password: String!): Auth
-    addChore(input: ChoreInput ): Chore
+    addChore(input: ChoreInput ): UserWithChores
     completeChore(choreId: ID!): Chore 
     updateUser(input: UserUpdateInput): User
 

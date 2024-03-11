@@ -1,14 +1,25 @@
 import React from "react";
 import { useState } from 'react';
 import {
-    Card, CardHeader, CardBody, CardFooter, Image, Text, Stack, Heading, Button, List,
+    Card, 
+    CardHeader,
+    CardBody,
+    CardFooter,
+    Image,
+    Text,
+    Stack,
+    Heading,
+    List,
     ListItem,
     ListIcon,
-
     UnorderedList,
+    useDisclosure,
+    Button
 } from '@chakra-ui/react'
+import AddChoreModal from "./AddChoreModal";
 
 const ChildCard = function () {
+    const { isOpen, onOpen, onClose }= useDisclosure()
 
     const [childInfo, setChildInfo]=useState({
         username: '',
@@ -36,10 +47,9 @@ const ChildCard = function () {
 
                     <Text py='2'>
                         <UnorderedList>
-                            <ListItem>Lorem ipsum dolor sit amet</ListItem>
-                            <ListItem>Consectetur adipiscing elit</ListItem>
-                            <ListItem>Integer molestie lorem at massa</ListItem>
-                            <ListItem>Facilisis in pretium nisl aliquet</ListItem>
+                            <ListItem>{childInfo.username}</ListItem>
+                            <ListItem> {childInfo.age} </ListItem>
+                            <ListItem>{childInfo.goal}</ListItem>
                         </UnorderedList>
                     </Text>
                 </CardBody>
@@ -48,6 +58,12 @@ const ChildCard = function () {
                     <Button variant='solid' colorScheme='blue'>
                         Edir Profile
                     </Button>
+                    <Button onClick={onOpen}>Create Chore</Button> 
+                    <AddChoreModal
+                        isOpen={isOpen}
+                        onClose={onClose}
+                    />
+                    
                 </CardFooter>
             </Stack>
         </Card>
