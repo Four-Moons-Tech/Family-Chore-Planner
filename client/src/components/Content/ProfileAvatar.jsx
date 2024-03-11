@@ -88,6 +88,64 @@ const ProfileAvatar = () => {
     const [src, setSrc] = useState(null);
     const fileInputRef = useRef();
 
+    // import { gql, useMutation } from '@apollo/client';
+    // // Ensure you have imported other necessary dependencies
+    
+    // // Define your GraphQL mutation
+    // const UPDATE_USER = gql`
+    //   mutation UpdateUser($id: ID!, $profileImage: String!) {
+    //     updateUser(_id: $id, profileImage: $profileImage) {
+    //       _id
+    //       profileImage
+    //     }
+    //   }
+    // `;
+    
+    // const ProfileAvatar = () => {
+    //     // Component state and other hooks
+    //     const [pview, setpview] = useState('');
+    //     const fileInputRef = useRef(null);
+        
+    //     // Initialize the useMutation hook with the UPDATE_USER mutation
+    //     const [updateUser, { data, loading, error }] = useMutation(UPDATE_USER);
+    
+    //     const updateProfileImage = () => {
+    //         // Assuming you have a way to obtain the user's ID and the image to upload
+    //         const userId = 'your-user-id'; // This should be dynamically obtained
+    //         const profileImage = pview; // The Base64 or URL of the image
+    
+    //         // Call the mutation
+    //         updateUser({
+    //             variables: {
+    //                 _id: userId,
+    //                 profileImage: profileImage
+    //             }
+    //         });
+    
+    //         if (error) {
+    //             console.log('Error updating user:', error);
+    //             // Handle errors, e.g., show a notification
+    //         }
+    
+    //         if (data) {
+    //             console.log('User updated:', data);
+    //             // Handle success, e.g., show a success message
+    //         }
+    //     };
+    
+    //     // Rest of your component including file reading, Avatar editing, etc.
+    
+    //     // Remember to replace "Save" button onClick with updateProfileImage
+    //     return (
+    //         <div className="p-4 text-center">
+    //             {/* Your component JSX */}
+    //             <Button label="Save" onClick={updateProfileImage} />
+    //             {/* Rest of your JSX */}
+    //         </div>
+    //     );
+    // };
+
+
     useEffect(() => {
         const savedImage = localStorage.getItem('profileImage');
         if (savedImage) {

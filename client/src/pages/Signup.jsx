@@ -17,8 +17,10 @@ const Signup = () => {
 
     if (loading) console.log("Loading...");
 
-    if (error) console.log(`Submission error! ${error.message}`, error.graphQLErrors);
-
+    if (error) {
+        console.log(`Submission error! ${error.message}`);
+        console.dir(error)
+    }
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormState({ ...formState, [name]: value });
@@ -27,10 +29,12 @@ const Signup = () => {
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         try {
-            const { data } = await addUser({ variables: { ...formState } });
+            const payload = { variables: { ...formState } }
+            console.log(payload)
+            const { data } = await addUser(payload);
             Auth.login(data.addUser.token);
         } catch (e) {
-            console.error(e);
+            // console.dir(e);
         }
     };
 
