@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Box } from "@chakra-ui/react";
+
 
 import { Flex, Breadcrumb, BreadcrumbItem, Box } from "@chakra-ui/react";
 import { ChevronRightIcon} from "@chakra-ui/icons"
-import { IoChevronForwardCircleOutline } from 'react-icons/io5';
+
 
 
 // import { Navbar, Nav, Container, Modal, Tab } from '@chakra-ui/react';
@@ -23,6 +23,7 @@ const AppNavbar = () => {
 
   return (
 
+    <>
     <Box display="flex" justifyContent="center">
       {Auth.loggedIn() ? (
         <>
@@ -79,6 +80,7 @@ const AppNavbar = () => {
         </BreadcrumbItem>
       </Breadcrumb>
     </Flex>
+    </>
 
 
 
