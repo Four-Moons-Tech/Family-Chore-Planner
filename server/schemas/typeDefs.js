@@ -48,7 +48,7 @@ const typeDefs = `#graphql
 
   type Query {
     me: User
-    user(username: String): User
+    user(username: String!): User
     users: [User]
     children:[User]
     chores(userId: ID ): [Chore]

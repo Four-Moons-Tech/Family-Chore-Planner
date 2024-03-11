@@ -7,7 +7,7 @@
 
 
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import AddChildProfile from '../components/Content/AddChildsProfile';
 import ChildCard from '../components/Content/ChildCard';
@@ -17,9 +17,23 @@ import {
 } from '@chakra-ui/react'
 
 
+import { QUERY_USER } from '../utils/queries.js'
+import Auth from '../utils/auth.js'
+
+
 const FamilyProfile = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const user = Auth.getProfile()?.data
+    if (user) {
+        const payload = {variables: {
+            username: user.username
+        }}
+        console.log(payload)
+        let { data, error } = useQuery(QUERY_USER, payload)
+        if (error) console.dir(error)
+    }
 
     return (
         <>    

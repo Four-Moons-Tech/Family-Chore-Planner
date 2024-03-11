@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+
+// import { useState } from 'react';
+// import { Link } from 'react-router-dom';
 
 
 
-import { Flex, Breadcrumb, BreadcrumbItem, Box } from "@chakra-ui/react";
-import { ChevronRightIcon} from "@chakra-ui/icons"
+// import { Flex, Breadcrumb, BreadcrumbItem, Box } from "@chakra-ui/react";
+// import { ChevronRightIcon} from "@chakra-ui/icons"
 
 
 
@@ -14,72 +15,109 @@ import { ChevronRightIcon} from "@chakra-ui/icons"
 
 
 
+
+import React from 'react';
+import { Box, Breadcrumb, BreadcrumbItem, Flex } from "@chakra-ui/react";
+import { ChevronRightIcon } from "@chakra-ui/icons"
+import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
 
 const AppNavbar = () => {
-  // set modal display state
-  const [showModal, setShowModal] = useState(false);
-  console.log(Auth.getProfile())
-
+  const user = Auth.getProfile()?.data
+  console.log(user)
   return (
 
-    <>
-    <Box display="flex" justifyContent="center">
-      {Auth.loggedIn() ? (
-        <>
-          <button style={{ marginRight: '1rem' }} onClick={Auth.logout}>
-            Sign out
-          </button>
-        </>
-      ):(
-        <>
-          <Link to="/login" style={{ marginRight: '1rem' }}>Log in</Link>
-          <Link to="/signup" style={{ marginRight: '1rem' }}>Sign up</Link>
-        </>
-      )}
-      <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
-      <Link to="/child-profile">My profile</Link>
-    </Box>
+
+
+//     <>
+//     <Box display="flex" justifyContent="center">
+//       {Auth.loggedIn() ? (
+//         <>
+//           <button style={{ marginRight: '1rem' }} onClick={Auth.logout}>
+//             Sign out
+//           </button>
+//         </>
+//       ):(
+//         <>
+//           <Link to="/login" style={{ marginRight: '1rem' }}>Log in</Link>
+//           <Link to="/signup" style={{ marginRight: '1rem' }}>Sign up</Link>
+//         </>
+//       )}
+//       <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
+//       <Link to="/child-profile">My profile</Link>
+//     </Box>
+
 
     <Flex justifyContent="center" fontSize="lg" fontWeight="bold" padding="1rem" backgroundColor="gray.100" boxShadow="md">
       <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
         <BreadcrumbItem>
-        <Box
-          as ={Link}to="/"
-          _hover={{ color: "blue.500" }}
-          style={{ marginRight: '1rem', color: 'gray.600', textDecoration: 'none' }}>
+          <Box
+            as={Link}
+            to="/"
+            _hover={{ color: "blue.500" }}
+            style={{ color: 'gray.600', textDecoration: 'none' }}
+          >
             Home
-            </Box>
-        </BreadcrumbItem>
-
-        <BreadcrumbItem>
-        <Box
-        as ={Link} to ="/login"
-        _hover={{ color: "blue.500" }}
-        style={{ marginRight: '1rem', color: 'gray.600', textDecoration: 'none' }}>
-          Log in
           </Box>
         </BreadcrumbItem>
 
-        <BreadcrumbItem>
-        <Box
-        as ={Link} to="/signup"
-        _hover={{ color: "blue.500" }}
-         style={{ marginRight: '1rem', color: 'gray.600', textDecoration: 'none' }}>
-          Sign up
-          </Box>
-        </BreadcrumbItem>
+        {Auth.loggedIn() ? (
+          <>
+            <BreadcrumbItem>
+              <Box
+                as={Link}
+                to="/"
+                onClick={Auth.logout}
+                _hover={{ color: "blue.500" }}
+                style={{ color: 'gray.600', textDecoration: 'none' }}
+              >
+                Sign out
+              </Box>
+            </BreadcrumbItem>
+            <ChevronRightIcon color='gray.500' />
+          </>
+        ) : (
+          <>
+            <BreadcrumbItem>
+              <Box
+                as={Link}
+                to="/login"
+                _hover={{ color: "blue.500" }}
+                style={{ color: 'gray.600', textDecoration: 'none' }}
+              >
+                Log in
+              </Box>
+            </BreadcrumbItem>
+            <ChevronRightIcon color='gray.500' />
+
+            <BreadcrumbItem>
+              <Box
+                as={Link}
+                to="/signup"
+                _hover={{ color: "blue.500" }}
+                style={{ color: 'gray.600', textDecoration: 'none' }}
+              >
+                Sign up
+              </Box>
+            </BreadcrumbItem>
+            <ChevronRightIcon color='gray.500' />
+          </>
+        )}
 
         <BreadcrumbItem isCurrentPage>
           <Box
-          as ={Link} to="/child-profile"
-          _hover={{ color: "blue.500" }}
-           style={{ color: 'gray.600', textDecoration: 'none' }}>
+            as={Link}
+            to="/child-profile"
+            _hover={{ color: "blue.500" }}
+            style={{ color: 'gray.600', textDecoration: 'none' }}
+          >
             My profile
-            </Box>
+          </Box>
         </BreadcrumbItem>
       </Breadcrumb>
     </Flex>
+
+
     </>
 
 
@@ -145,6 +183,7 @@ const AppNavbar = () => {
     //     </Tab.Container>
     //   </Modal>
     // </>
+
   );
 };
 

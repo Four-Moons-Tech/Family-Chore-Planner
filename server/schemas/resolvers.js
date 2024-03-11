@@ -6,8 +6,9 @@ const resolvers = {
     users: async () => {
       return User.find().populate('chores');
     },
-    user: async (parent, { email }) => {
-      return User.findOne({ email }).populate('chores');
+    user: async (parent, { username }) => {
+      console.log("getting user:", username)
+      return User.findOne({ username }).populate('chores');
     },
 
     // chore: async (parent, { role}) => {
@@ -43,6 +44,7 @@ const resolvers = {
         // throw AuthenticationError;
       }
 
+      console.log(user)
       const token = signToken(user);
 
       return { token, user };
