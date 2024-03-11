@@ -28,16 +28,19 @@ const resolvers = {
 
   Mutation: {
     login: async (parent, { email, password }) => {
+      console.log("Attempting to log in user...", { email, password })
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw AuthenticationError;
+        throw new Error("User not found")
+        // throw AuthenticationError;
       }
-
+      
       const correctPw = await user.isCorrectPassword(password);
-
+      
       if (!correctPw) {
-        throw AuthenticationError;
+        throw new Error("Incorrect password")
+        // throw AuthenticationError;
       }
 
       const token = signToken(user);
@@ -47,9 +50,16 @@ const resolvers = {
 
 
     addUser: async (parent, { username, email, password, lastName }) => {
+      console.log("Adding user...", { username, email, password, lastName })
       try {
-        console.log("new user:", username, email, password, lastName);
-        const user = await User.create({username, email, password, lastName});
+        const user = new User({
+          username, 
+          email, 
+          password, 
+          lastName, 
+          children: []
+        });
+        await user.save()
         const token = signToken(user);
         return { token, user };
       } catch (error) {
@@ -58,7 +68,24 @@ const resolvers = {
       }
     },
 
-    
+    addChild: async (parent, { username, email, password, parent_id }) => {
+      console.log("Adding child...", { username, email, password, parent_id })
+      try {
+        const child = await User.create({ username, email, password, role: 'child' });
+        const parent = await User.findOneAndUpdate(
+            { _id: parent_id },
+            { $push: { children: child._id } },
+            { new: true }
+          )
+        if (!parent) throw new Error("Parent not found")
+        // const token = signToken(user);
+        return { parent, child };
+      } catch (error) {
+        console.log("Failure adding user", error);
+        throw new Error("Failure adding user");
+      }
+    },
+
 
     addChore: async (parent, { choreInput }, context) => {
       if (context.User) {

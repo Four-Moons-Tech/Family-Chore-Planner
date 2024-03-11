@@ -4,7 +4,12 @@ import { jwtDecode } from "jwt-decode";
 
 class AuthService {
   getProfile() {
-    return jwtDecode(this.getToken());
+    try {
+      return jwtDecode(this.getToken());
+    } catch (err) {
+      console.warn("Auth.getProfile failed. Probably just because you're not logged in.:", err)
+      return null
+    }
   }
 
   loggedIn() {

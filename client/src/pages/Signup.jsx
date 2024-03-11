@@ -29,7 +29,7 @@ const Signup = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log(formState);
+        console.log("signup formState:", formState);
 
         try {
             console.log(Auth.login);
@@ -37,10 +37,11 @@ const Signup = () => {
             const { data } = await addUser({
                 variables: { ...formState },
             });
-            console.log(data);
+            console.log("data from addUser:", data);
             
             Auth.login(data.addUser.token);
         } catch (e) {
+            console.log("Error signing up")
             console.error(e);
         }
     };

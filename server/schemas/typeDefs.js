@@ -1,4 +1,4 @@
-const typeDefs = `
+const typeDefs = `#graphql
   type User {
     _id: ID
     username: String
@@ -7,7 +7,7 @@ const typeDefs = `
     password: String
     role: String!
     profileImage: String
-    children: [User]
+    children: [ID]
     chores: [Chore]
     
   }
@@ -27,13 +27,7 @@ const typeDefs = `
     dueDate: String!  
   }
 
-  input UserInput {
-    username: String!
-    lastName: String
-    email: String!
-    password: String!
-    profileImage: String
-  }
+  
   
   # this updates a user; that's why the _id is the only on that's required
   input UserUpdateInput {
@@ -59,8 +53,14 @@ const typeDefs = `
     chore(choreId: ID!): Chore
   }
 
+  type ParentAndChild {
+    parent: User
+    child: User
+  }
+
   type Mutation {
     addUser(username: String!, email: String!, password: String!, lastName: String!): Auth
+    addChild(username: String!, email: String!, password: String!, parent_id: ID!): ParentAndChild
     login(email: String!, password: String!): Auth
     addChore(input: ChoreInput ): Chore
     completeChore(choreId: ID!): Chore 
