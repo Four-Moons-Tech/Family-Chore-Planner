@@ -27,7 +27,11 @@ const choreSchema = new Schema(
         complete: {
             type: Boolean,
             default: false
-        },    
+        }, 
+        userId: {
+            type: String,
+            required: true,
+        },   
         
     },
     {   
