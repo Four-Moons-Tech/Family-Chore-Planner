@@ -21,7 +21,7 @@
         "@chakra-ui/icons": "^2.1.1",
         "dotenv": "^16.4.5",
 
-        "react-confetti": "^6.1.0"
+        "react-confetti": "^6.1.0",
 
         "framer-motion": "^11.0.8"
         

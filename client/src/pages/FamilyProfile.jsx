@@ -11,9 +11,13 @@ import { useMutation, useQuery } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 import AddChildProfile from '../components/Content/AddChildsProfile';
 import ChildCard from '../components/Content/ChildCard';
-import { 
+import {
     useDisclosure,
-    Button
+    Button,
+    Grid,
+    GridItem,
+    Flex
+
 } from '@chakra-ui/react'
 
 
@@ -23,29 +27,54 @@ import Auth from '../utils/auth.js'
 
 const FamilyProfile = () => {
 
+    const [children, setChildren] = useState([
+        {
+            username: "test",
+            age: "test",
+            goal: "test"
+        }
+
+    ])
+
+
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const user = Auth.getProfile()?.data
     if (user) {
-        const payload = {variables: {
-            username: user.username
-        }}
+        const payload = {
+            variables: {
+                username: user.username
+            }
+        }
         console.log(payload)
         let { data, error } = useQuery(QUERY_USER, payload)
         if (error) console.dir(error)
     }
 
     return (
-        <>    
-            <Button onClick={onOpen}>Create Child User</Button>
-            <AddChildProfile 
+        <>
+            <Button backgroundColor="purple" margin="50px"  onClick={onOpen}>Create Child User</Button>
+            <AddChildProfile
                 isOpen={isOpen}
                 onClose={onClose}
             />
-            <ChildCard/>
+            <Flex justifyContent="center">
+                <section className="portfolio container-fluid text-center pb-5">
+                    <div className="row gy-4">
+                        {children.map((children, index) => (
+                            <div className="col-12 col-md-6 col-lg-4" key={index}>
+                                <ChildCard  username={children.username} age={children.age} goal={children.goal} />
+                            </div>
+                        ))}
+
+
+                    </div>
+                </section>
+            </Flex>
+
         </>
     )
-   
+
 
 
     // const [formState, setFormState] = useState({ username: '', password: '' });

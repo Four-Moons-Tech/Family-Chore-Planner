@@ -89,13 +89,13 @@ const resolvers = {
     },
 
 
-    addChore: async (parent, { choreInput, userId }) => {
+    addChore: async (parent, { input }) => {
       try {
-        const chore = await Chore.create(choreInput);
-
+        // const chore = await Chore.create(choreinput);
+        console.log(input)
         const userWithChores = await User.findOneAndUpdate(
-          { _id: userId },
-          { $push: { chores: chore._id } },
+          { _id: input.userId },
+          { $addToSet: { chores: input } },
           { new: true }
         );
 

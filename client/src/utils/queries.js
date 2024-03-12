@@ -8,19 +8,19 @@ export const QUERY_USER = gql`
       lastName
       email
       role
-      children {
-        _id
-        childUsername
-        password
-        goal
-      }
-      chore {
-        choreId
-        description
-        dueDate
-        complete
-        payRate
-      }
+      # children {
+      #   _id
+      #   childUsername
+      #   password
+      #   goal
+      # }
+      # chore {
+      #   choreId
+      #   description
+      #   dueDate
+      #   complete
+      #   payRate
+      # }
     }
   }
 `;

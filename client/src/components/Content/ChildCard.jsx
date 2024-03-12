@@ -1,69 +1,66 @@
 import React from "react";
 import { useState } from 'react';
 import {
-    Card, 
+    Card,
     CardHeader,
     CardBody,
     CardFooter,
-    Image,
-    Text,
+    
     Stack,
     Heading,
-    List,
-    ListItem,
-    ListIcon,
-    UnorderedList,
     useDisclosure,
     Button
 } from '@chakra-ui/react'
 import AddChoreModal from "./AddChoreModal";
+import ProfileAvatar from "./ProfileAvatar";
+// import { UPDATE_USER } from "../../utils/mutations";
+import { useMutation } from "@apollo/client";
+import UserProfile from "./UserProfile";
+import ChoreList from "./ChoreList";
 
 const ChildCard = function () {
-    const { isOpen, onOpen, onClose }= useDisclosure()
+    const { isOpen, onOpen, onClose } = useDisclosure()
 
-    const [childInfo, setChildInfo]=useState({
-        username: '',
-        email: '',
-        lastName: '',
-        goal: '', 
-        // totalEarnings: ''
-    })
+    
+    // setChildInfo()
+
+    // const editChildProfile = function () {
+    //     const [updateUser, {error}] = useMutation(UPDATE_USER);
+
+    // }
     return (
-        <Card
-            direction={{ base: 'column', sm: 'row' }}
+        <Card 
+            backgroundColor={"pink"}
+            direction={{ base: 'column', lg: 'row' }}
             overflow='hidden'
             variant='outline'
+            display="flex"
+            border="1px"
+            borderColor="blue"
         >
-            <Image
-                objectFit='cover'
-                maxW={{ base: '100%', sm: '200px' }}
-                src='https://images.unsplash.com/photo-1667489022797-ab608913feeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60'
-                alt='Child Profile Picture'
-            />
+        <UserProfile />
 
-            <Stack>
-                <CardBody>
-                    <Heading size='md'>Child Profile</Heading>
+            <Stack >
+                <CardBody >
+                    <Heading size='md'>Child Username</Heading>
 
-                    <Text py='2'>
-                        <UnorderedList>
-                            <ListItem>{childInfo.username}</ListItem>
-                            <ListItem> {childInfo.age} </ListItem>
-                            <ListItem>{childInfo.goal}</ListItem>
-                        </UnorderedList>
-                    </Text>
+                    
+                    <ChoreList/>
+                    
+
                 </CardBody>
 
                 <CardFooter>
-                    <Button variant='solid' colorScheme='blue'>
-                        Edir Profile
-                    </Button>
-                    <Button onClick={onOpen}>Create Chore</Button> 
+                    {/* <Button onClick={onOpen} variant='solid' colorScheme='blue'>
+                        Edit Profile
+                    </Button> */}
+                    <Button onClick={onOpen} variant='solid' colorScheme='blue'>
+                        Create Chore</Button>
                     <AddChoreModal
                         isOpen={isOpen}
                         onClose={onClose}
                     />
-                    
+
                 </CardFooter>
             </Stack>
         </Card>
