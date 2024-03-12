@@ -18,8 +18,11 @@ const server = new ApolloServer({
     {
       requestDidStart(requestContext) {
         return {
-          didEncounterErrors(errors) {
-            console.log(errors)
+          didEncounterErrors(obj) {
+            console.log("Error encounter")
+            console.log(obj.source)
+            console.log(obj.operationName)
+            console.log(obj.errors)
           }
         }
       }

@@ -4,7 +4,9 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 const resolvers = {
   Query: {
     users: async () => {
-      const users = await User.find({}).populate('chores');
+      const users = await User.find({}).populate('chores')
+      // .populate('totalEarnings').populate('choreCount')
+      // .populate('childrenCount');
       // console.log(users)
       return users
     },
@@ -13,6 +15,9 @@ const resolvers = {
       return User.findOne({ username })
         .populate('chores')
         .populate('children')
+        // .populate('totalEarnings')
+        // .populate('choreCount')
+        // .populate('childrenCount')
     },
 
     // chore: async (parent, { role}) => {
@@ -122,11 +127,18 @@ const resolvers = {
     // update client mutations!
     // update variables in ChildProfile _completeChore
     completeChore: async (parent, { choreId, userId }) => {
-      const user = await User.findById(userId)
-      const choreIndex = user.chores.findIndex(c => c.choreId === choreId)
-      user.chores[choreIndex].completed = true
-      await user.save()
-      return user.chores[choreIndex]
+      const user = await User.findOneAndUpdate(
+        {_id: userId, "chores.choreId": choreId },
+        {
+          $set: {
+            "chores.$.complete": true
+          }
+        },
+        {
+          new: true
+        }
+      )
+      return user.chores[0]
     },
 
     updateUser: async (parent, { input }) => {

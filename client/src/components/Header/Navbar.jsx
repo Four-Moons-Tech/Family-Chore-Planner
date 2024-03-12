@@ -27,7 +27,7 @@ const AppNavbar = () => {
 
           {Auth.loggedIn() ? (
             <>
-              
+
               <BreadcrumbItem>
                 <Box
                   as={Link}
@@ -62,6 +62,9 @@ const AppNavbar = () => {
                 </Box>
               </BreadcrumbItem>
               <ChevronRightIcon color='gray.500' />
+              <Box>
+                <h2>You are logged in as {user.username}</h2>
+              </Box>
             </>
           ) : (
             <>
@@ -93,9 +96,7 @@ const AppNavbar = () => {
 
         </Breadcrumb>
       </Flex>
-      <Box>
-        <h2>You are loggid in as {user.username}</h2>
-      </Box>
+
 
     </>
 

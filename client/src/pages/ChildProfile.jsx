@@ -30,7 +30,7 @@ import {
 } from "@chakra-ui/react";
 import Confetti from 'react-confetti';
 import ProfileAvatar from '../components/Content/ProfileAvatar';
-
+import ProgressBar from '../components/Content/ProgressBar';
 import Auth from '../utils/auth';
 import { useQuery, useMutation } from '@apollo/client'
 import { QUERY_USER } from '../utils/queries'
@@ -60,28 +60,28 @@ const ChildProfile = () => {
   const stackDirection = useBreakpointValue({ base: 'column', md: 'row' });
   const textColor = useColorModeValue('gray.800', 'white');
   const modalBg = useColorModeValue('white', 'gray.800');
-  
+
   const user = Auth.getProfile()?.data
 
-  const [ _addChore, { 
-    error: addChoreError, 
-    data: addChoreData, 
+  const [_addChore, {
+    error: addChoreError,
+    data: addChoreData,
     loading: addChoreLoading
   }] = useMutation(ADD_CHORE)
 
-  const [ _completeChore, { 
-    error: completeChoreError, 
-    data: completeChoreData, 
+  const [_completeChore, {
+    error: completeChoreError,
+    data: completeChoreData,
     loading: completeChoreLoading
   }] = useMutation(COMPLETE_CHORE)
 
-  let { 
-    data: queryUserData, 
-    error: queryUserError 
+  let {
+    data: queryUserData,
+    error: queryUserError
   } = useQuery(QUERY_USER, {
-      variables: {
-          username: user.username
-      }
+    variables: {
+      username: user.username
+    }
   })
   if (queryUserError) console.dir(queryUserError)
   console.log("QUERY_USER:", queryUserData)
@@ -115,14 +115,17 @@ const ChildProfile = () => {
   };
 
   const completeChore = (choreId) => {
+    console.log("user._id", user._id)
     _completeChore({
       variables: {
-        choreId
+        choreId,
+        userId: user._id
       }
     })
     if (!completeChoreError) {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 3000);
+      // location.reload()
     } else {
       alert('failure completing chore')
     }
@@ -143,14 +146,14 @@ const ChildProfile = () => {
   };
 
   return (
-    <Box 
-      minH="100vh" 
+    <Box
+      minH="100vh"
       p={4}
       backgroundImage="url('/images/amy-shamblen-fEBBSuFusUU-unsplash.jpg')"
       backgroundSize="cover"
       backgroundRepeat="no-repeat"
       backgroundPosition="center center"
-      // bg="yellow.100" //  in case the image fails to load
+    // bg="yellow.100" //  in case the image fails to load
     >
       <VStack spacing={8} align="stretch" bg="rgba(255, 255, 255, 0.85)" borderRadius="lg" p={5}>
         <Box alignSelf="flex-start">
@@ -163,31 +166,41 @@ const ChildProfile = () => {
               <Text fontWeight="bold" color={textColor}>Existing Chores:</Text>
               {queryUserData?.user?.chores?.map((chore) => (
                 <Box key={chore.choreId} display="flex" justifyContent="space-between" alignItems="center" width="100%" bg={modalBg} p={3} borderRadius="md">
-                  <Text color={chore.completed ? 'gray' : textColor}>
+                  <Text color={chore.complete ? 'gray' : textColor}>
                     {chore.description} - {chore.dueDate} - Reward: ${chore.payRate}
                   </Text>
-                  {!chore.completed && (
+                  {!chore.complete && (
                     <Button colorScheme="blue" onClick={() => completeChore(chore.choreId)}>
                       Mark as complete
                     </Button>
                   )}
-                  {chore.completed && (
+                  {chore.complete && (
                     <Text color="green.500">${chore.payRate} earned</Text>
                   )}
                 </Box>
               ))}
-              <Button colorScheme="blue" size="lg" onClick={openSelectModal}>
+              {/* <Button colorScheme="blue" size="lg" onClick={openSelectModal}>
                 Select Chores
-              </Button>
+              </Button> */}
             </VStack>
           </VStack>
           <Box p={5} borderWidth="1px" borderRadius="lg" width="full" maxWidth="lg" bg={modalBg}>
             <Text fontSize="xl" fontWeight="bold" mb={3} color={textColor}>Savings Goal</Text>
             <Divider />
-            <Text mt={3} color={textColor}>{savingsGoal}</Text>
+            <Text mt={3} color={textColor}>{user.goal || "No goal set"}</Text>
+          </Box>
+          <Box p={5} borderWidth="1px" borderRadius="lg" width="full" maxWidth="lg" bg={modalBg}>
+            <Text fontSize="xl" fontWeight="bold" mb={3} color={textColor}>Total Earnings</Text>
+            <Divider />
+            <Text mt={3} color={textColor}>${queryUserData?.user?.totalEarnings || 0}</Text>
+          </Box>
+          <Box p={5} borderWidth="1px" borderRadius="lg" width="full" maxWidth="lg" bg={modalBg}>
+            {/* <div>
+              <ProgressBar/>
+            </div> */}
           </Box>
         </Stack>
-        <Modal isOpen={showSelectModal} onClose={closeSelectModal}>
+        {/* <Modal isOpen={showSelectModal} onClose={closeSelectModal}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Select Chores</ModalHeader>
@@ -211,7 +224,7 @@ const ChildProfile = () => {
               <Button colorScheme="green" onClick={saveSelectedChores}>Save</Button>
             </ModalFooter>
           </ModalContent>
-        </Modal>
+        </Modal> */}
         {showConfetti && <Confetti />}
       </VStack>
     </Box>
