@@ -19,7 +19,7 @@ const AddChoreModal = function ({
     isOpen,
     onClose
 }) {
-    const [choreFormData, setChoreFormData] = useState({ description: '', payRate: '', dueDate: '', choreId: ''});
+    const [choreFormData, setChoreFormData] = useState({ description: '', payRate: '', dueDate: '', userId: ''});
 
     const [addChore, { error, data }] = useMutation(ADD_CHORE);
     if (error) console.log("Error adding chore:", error)
@@ -38,7 +38,7 @@ const AddChoreModal = function ({
             }
             console.log(variables)
             const { chore } = await addChore({
-                variables
+                variables: {input: {...choreFormData}}
             });
 
             console.log(chore);
@@ -68,6 +68,17 @@ const AddChoreModal = function ({
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <form onSubmit={handleFormSubmit}>
+                        <div className='form-field'>
+                                <label htmlFor='text'>ID</label>
+                                <input
+                                    type='text'
+                                    placeholder='UserID'
+                                    name='UserID'
+                                    onChange={handleInputChange}
+                                    value={choreFormData.userId}
+                                    required
+                                />
+                            </div>
                             <div className='form-field'>
                                 <label htmlFor='username'>Description</label>
                                 <input

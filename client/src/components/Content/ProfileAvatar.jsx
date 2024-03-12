@@ -79,7 +79,7 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from "primereact/button";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
+// import 'primeicons/primeicons.css';
 
 const ProfileAvatar = () => {
     const [image, setImage] = useState("");
@@ -182,13 +182,14 @@ const ProfileAvatar = () => {
             <div className="flex flex-column justify-content-center align-items-center">
                 {image && (
                     <img
-                        style={{ width: "200px", height: "200px", borderRadius: "50%", objectFit: "cover", border: "4px solid green" }}
+                        style={{ width: "200px", height: "200px", borderRadius: "50%", objectFit: "cover",padding:"20px" }}
                         src={image}
                         alt="Profile avatar"
+                        
                     />
                 )}
                 <label htmlFor="file-upload" className="mt-3 p-button p-component">
-                    Choose File
+                    Change Avatar
                 </label>
                 <input
                     ref={fileInputRef}

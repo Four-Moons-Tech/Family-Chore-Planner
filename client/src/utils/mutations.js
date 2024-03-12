@@ -50,15 +50,19 @@ export const ADD_CHILD = gql`
 `;
 
 export const ADD_CHORE = gql`
-  mutation addChore($description: String!,$payRate:Number, $dueDate: Date, $userId: ID ){
-    addChore(description: $description, payRate: $payRate, dueDate: $dueDate, userId:$userId ){
+  mutation AddChore($input: ChoreInput) {
+  addChore(input: $input) {
+    username
+    chores {
+      userId
+      complete
       choreId
-      description
       payRate
       dueDate
-      userId
+      description
     }
-    }
+  }
+}
   
 `;
 

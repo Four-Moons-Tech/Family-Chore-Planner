@@ -17,7 +17,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-
+import './App.css'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
