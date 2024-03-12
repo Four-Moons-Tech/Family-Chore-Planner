@@ -9,7 +9,6 @@
 //     */
 
 
-
 import React, { useState } from 'react';
 import {
   Box,
@@ -26,10 +25,10 @@ import {
   Stack,
   Divider,
   useBreakpointValue,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import Confetti from 'react-confetti';
 import ProfileAvatar from '../components/Content/ProfileAvatar';
-
 
 const ChildProfile = () => {
   const [showSelectModal, setShowSelectModal] = useState(false);
@@ -44,6 +43,8 @@ const ChildProfile = () => {
   const [savingsGoal, setSavingsGoal] = useState("New Bike - $100");
 
   const stackDirection = useBreakpointValue({ base: 'column', md: 'row' });
+  const textColor = useColorModeValue('gray.800', 'white');
+  const modalBg = useColorModeValue('white', 'gray.800');
 
   const openSelectModal = () => {
     setShowSelectModal(true);
@@ -79,8 +80,16 @@ const ChildProfile = () => {
   };
 
   return (
-    <Box minH="100vh" p={4}>
-      <VStack spacing={8} align="stretch">
+    <Box 
+      minH="100vh" 
+      p={4}
+      backgroundImage="url('/images/amy-shamblen-fEBBSuFusUU-unsplash.jpg')"
+      backgroundSize="cover"
+      backgroundRepeat="no-repeat"
+      backgroundPosition="center center"
+      // bg="yellow.100" //  in case the image fails to load
+    >
+      <VStack spacing={8} align="stretch" bg="rgba(255, 255, 255, 0.85)" borderRadius="lg" p={5}>
         <Box alignSelf="flex-start">
           <ProfileAvatar />
         </Box>
@@ -88,10 +97,10 @@ const ChildProfile = () => {
           <VStack spacing={4} width="full" maxWidth="lg">
             <Text as="h4" fontSize="2xl" color="blue.600" mb={4}>Child Profile</Text>
             <VStack spacing={3} width="100%">
-              <Text fontWeight="bold">Existing Chores:</Text>
+              <Text fontWeight="bold" color={textColor}>Existing Chores:</Text>
               {existingChores.map((chore) => (
-                <Box key={chore.id} display="flex" justifyContent="space-between" alignItems="center" width="100%">
-                  <Text color={chore.completed ? 'gray' : 'black'}>
+                <Box key={chore.id} display="flex" justifyContent="space-between" alignItems="center" width="100%" bg={modalBg} p={3} borderRadius="md">
+                  <Text color={chore.completed ? 'gray' : textColor}>
                     {chore.name} - {chore.time} - Reward: ${chore.reward}
                   </Text>
                   {!chore.completed && (
@@ -100,7 +109,7 @@ const ChildProfile = () => {
                     </Button>
                   )}
                   {chore.completed && (
-                    <Text>${chore.reward} earned</Text>
+                    <Text color="green.500">${chore.reward} earned</Text>
                   )}
                 </Box>
               ))}
@@ -109,10 +118,10 @@ const ChildProfile = () => {
               </Button>
             </VStack>
           </VStack>
-          <Box p={5} borderWidth="1px" borderRadius="lg" width="full" maxWidth="lg">
-            <Text fontSize="xl" fontWeight="bold" mb={3}>Savings Goal</Text>
+          <Box p={5} borderWidth="1px" borderRadius="lg" width="full" maxWidth="lg" bg={modalBg}>
+            <Text fontSize="xl" fontWeight="bold" mb={3} color={textColor}>Savings Goal</Text>
             <Divider />
-            <Text mt={3}>{savingsGoal}</Text>
+            <Text mt={3} color={textColor}>{savingsGoal}</Text>
           </Box>
         </Stack>
         <Modal isOpen={showSelectModal} onClose={closeSelectModal}>
@@ -122,11 +131,11 @@ const ChildProfile = () => {
             <ModalCloseButton />
             <ModalBody>
               <VStack spacing={3}>
-                {newChoreAdded && <Text color="green">You've added a new chore!</Text>}
-                <Text fontWeight="bold">Available Chores:</Text>
+                {newChoreAdded && <Text color="green.500">You've added a new chore!</Text>}
+                <Text fontWeight="bold" color={textColor}>Available Chores:</Text>
                 {existingChores.filter(chore => !chore.completed).map((chore) => (
-                  <Box key={chore.id} display="flex" justifyContent="space-between" alignItems="center" width="100%">
-                    <Text>{chore.name} - {chore.time}</Text>
+                  <Box key={chore.id} display="flex" justifyContent="space-between" alignItems="center" width="100%" bg={modalBg} p={3} borderRadius="md">
+                    <Text color={textColor}>{chore.name} - {chore.time}</Text>
                     <Button colorScheme="green" onClick={() => addChore(chore)}>
                       Add
                     </Button>
