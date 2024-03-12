@@ -1,21 +1,18 @@
-//Profile for an admin/parent user: 
 
-//Suppose to be able to create the child user - with a username and password only
-//Assign chores to a child
-//See al children/their schedule
-//Link to a Family calendar?(optional, if we have time left)
 
 
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
+
+
 import { ADD_USER } from '../utils/mutations';
+
+import { useMutation, useQuery } from '@apollo/client';
+
 import AddChildProfile from '../components/Content/AddChildsProfile';
 import ChildCard from '../components/Content/ChildCard';
 import {
     useDisclosure,
     Button,
-    Grid,
-    GridItem,
     Flex
 
 } from '@chakra-ui/react'
@@ -31,6 +28,7 @@ const FamilyProfile =()=>{
     console.log("this is a child", children)
     console.log('data', data)
     const { isOpen, onOpen, onClose } = useDisclosure()
+
     return (
 
         <>

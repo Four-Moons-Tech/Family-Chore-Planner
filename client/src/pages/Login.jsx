@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -32,8 +33,25 @@ const Login = () => {
     };
 
     return (
-        <Box display="flex" justifyContent="center" minH="100vh">
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" maxWidth="lg" width="100%" p={8} boxShadow="lg">
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minH="100vh"
+            p={8}
+            backgroundImage="url('/images/iStock-1422245668.jpg')"
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
+            backgroundSize="cover"
+        >
+            <Box
+                bg="rgba(255, 255, 255, 0.8)"
+                borderRadius="lg"
+                maxWidth="lg"
+                width="full"
+                p={8}
+                boxShadow="xl"
+            >
                 <Text as="h4" fontSize="2xl" color="blue.600" textAlign="center" mb={4}>Login</Text>
                 {data ? (
                     <Text textAlign="center">
@@ -61,4 +79,3 @@ const Login = () => {
 };
 
 export default Login;
-
