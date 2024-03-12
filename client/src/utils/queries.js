@@ -14,13 +14,13 @@ export const QUERY_USER = gql`
       #   password
       #   goal
       # }
-      # chore {
-      #   choreId
-      #   description
-      #   dueDate
-      #   complete
-      #   payRate
-      # }
+      chores {
+        choreId
+        description
+        dueDate
+        complete
+        payRate
+      }
     }
   }
 `;
