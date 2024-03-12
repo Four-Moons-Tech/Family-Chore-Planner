@@ -7,23 +7,43 @@ const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
+const cors = require('cors')
+
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  plugins: [
+    {
+      requestDidStart(requestContext) {
+        return {
+          didEncounterErrors(errors) {
+            console.log(errors)
+          }
+        }
+      }
+    }
+  ]
 });
+
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   await server.start();
 
+  // app.use((req, res, next) => {
+  //   console.log(`${req.method} request heard at ${req.url}`)
+  //   next()
+  // })
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
-
+  // app.use(cors())
   app.use('/graphql', expressMiddleware(server, {
     context: authMiddleware
   }));
+  // app.use('/graphql', expressMiddleware(server));
+
 
   if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/dist')));
@@ -39,6 +59,13 @@ const startApolloServer = async () => {
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
     });
   });
+  db.on('error', (err) => {
+    // Log the database connection error
+    console.error('Database Connection Error:', err);
+    // Optionally, log the error to a file
+    // fs.appendFileSync('error.log', `${new Date().toISOString()}: Database Connection Error: ${err}\n`);
+  });
+  
 };
 
 // Call the async function to start the server

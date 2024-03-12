@@ -1,33 +1,42 @@
+
+import React from 'react';
+import { Box, Button, useColorModeValue } from "@chakra-ui/react";
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Footer = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // consistency with a navbar
+  const backgroundColor = 'gray.100'; 
+
   return (
-    <footer className="w-100 mt-auto bg-secondary p-4">
-      <div className="container text-center mb-5">
-        {location.pathname !== '/' && (
-          <button
-            className="btn btn-dark mb-3"
-            onClick={() => navigate(-1)}
-          >
-            &larr; Go Back
-          </button>
-        )}
-        <h4>
-          Made with{' '}
-          <span
-            className="emoji"
-            role="img"
-            aria-label="heart"
-            aria-hidden="false"
-          >
-            ❤️
-          </span>{' '}
-          by the Tech Thoughts team.
-        </h4>
-      </div>
-    </footer>
+    <Box
+      as="footer"
+      w="full"
+      mt="auto"
+      bg={backgroundColor}
+      p={2} 
+      textAlign="center"
+    >
+      {location.pathname !== '/' && (
+        <Button colorScheme="blue" mb={2} size="sm" onClick={() => navigate(-1)}>
+          &larr; Go Back
+        </Button>
+      )}
+      <h4 style={{ fontSize: '1em', fontWeight: 'normal', color: '#333' }}>
+        Made with{' '}
+        <span
+          className="emoji"
+          role="img"
+          aria-label="heart"
+          aria-hidden="false"
+        >
+          ❤️
+        </span>{' '}
+        by Anna Moon, Anna Chuapetcharasopon, Brian Chia, Maryna Serdeshna
+      </h4>
+    </Box>
   );
 };
 

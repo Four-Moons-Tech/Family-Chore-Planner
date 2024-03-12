@@ -3,112 +3,62 @@ import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
-// - change the login to only username and password reqs
-import {
-    Box,
-    Button,
-    FormControl,
-    FormLabel,
-    Input,
-    Stack,
-    Text,
-} from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Input, Stack, Text } from "@chakra-ui/react";
 
-// npm i @chakra-ui/react @apollo/client react-router-dom
-
-const Login = (props) => {
+const Login = () => {
     const [formState, setFormState] = useState({ email: '', password: '' });
     const [login, { error, data }] = useMutation(LOGIN_USER);
+    const [errorDisplay, setErrorDisplay] = useState('');
 
-    // update state based on form input changes
+    if (error) {
+        console.log("Error logging in:", error.message);
+        setErrorDisplay(error.message);
+    }
+
     const handleChange = (event) => {
         const { name, value } = event.target;
-
-        setFormState({
-            ...formState,
-            [name]: value,
-        });
+        setFormState({ ...formState, [name]: value });
     };
 
-    // submit form
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log(formState);
         try {
-            const { data } = await login({
-                variables: { ...formState },
-            });
-
+            const { data } = await login({ variables: { ...formState } });
             Auth.login(data.login.token);
         } catch (e) {
             console.error(e);
         }
-
-        // clear form values
-        setFormState({
-            email: '',
-            password: '',
-        });
+        setFormState({ email: '', password: '' });
     };
 
     return (
-        <Box className="flex-row justify-center mb-4">
-            <Box className="col-12 col-lg-10">
-                <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-                    <Text as="h4" className="card-header bg-dark text-light p-2">Login</Text>
-                    <Box p="4">
-                        {data ? (
-                            <Text>
-                                Success! You may now head{' '}
-                                <Link to="/">back to the homepage.</Link>
-                            </Text>
-                        ) : (
-                            <form onSubmit={handleFormSubmit}>
-                                <Stack spacing={3}>
-                                    <FormControl>
-                                        <FormLabel htmlFor="email">Email address</FormLabel>
-                                        <Input
-                                            id="email"
-                                            name="email"
-                                            type="email"
-                                            value={formState.email}
-                                            onChange={handleChange}
-                                        />
-                                    </FormControl>
-                                    <FormControl>
-                                        <FormLabel htmlFor="password">Password</FormLabel>
-                                        <Input
-                                            id="password"
-                                            name="password"
-                                            type="password"
-                                            value={formState.password}
-                                            onChange={handleChange}
-                                        />
-                                    </FormControl>
-                                    <Button
-                                        type="submit"
-                                        colorScheme="blue"
-                                        size="lg"
-                                        isLoading={false}
-                                        loadingText="Submitting"
-                                        style={{ cursor: 'pointer' }}
-                                    >
-                                        Submit
-                                    </Button>
-                                </Stack>
-                            </form>
-                        )}
-
-                        {error && (
-                            <Box mt={3} p={3} bg="red.500" color="white">
-                                {error.message}
-                            </Box>
-                        )}
-                    </Box>
-                </Box>
+        <Box display="flex" justifyContent="center" minH="100vh">
+            <Box borderWidth="1px" borderRadius="lg" overflow="hidden" maxWidth="lg" width="100%" p={8} boxShadow="lg">
+                <Text as="h4" fontSize="2xl" color="blue.600" textAlign="center" mb={4}>Login</Text>
+                {data ? (
+                    <Text textAlign="center">
+                        Success! You may now head <Link to="/">back to the homepage.</Link>
+                    </Text>
+                ) : (
+                    <form onSubmit={handleFormSubmit}>
+                        <Stack spacing={4}>
+                            <FormControl isRequired>
+                                <FormLabel>Email address</FormLabel>
+                                <Input id="email" name="email" type="email" value={formState.email} onChange={handleChange} />
+                            </FormControl>
+                            <FormControl isRequired>
+                                <FormLabel>Password</FormLabel>
+                                <Input id="password" name="password" type="password" value={formState.password} onChange={handleChange} />
+                            </FormControl>
+                            <Button type="submit" colorScheme="blue" size="lg" width="full">Submit</Button>
+                        </Stack>
+                    </form>
+                )}
+                {error && <Text mt={4} color="red.500">{errorDisplay}</Text>}
             </Box>
         </Box>
     );
 };
 
 export default Login;
+

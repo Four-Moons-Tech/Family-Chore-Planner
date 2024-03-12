@@ -7,13 +7,14 @@ const resolvers = {
       return User.find().populate('chores');
     },
     user: async (parent, { username }) => {
+      console.log("getting user:", username)
       return User.findOne({ username }).populate('chores');
     },
 
-    chore: async (parent, { role}) => {
-      const params = role ? { role } : {};
-      return Chore.find(params).sort({ createdAt: -1 }).filter({complete:false});
-    },
+    // chore: async (parent, { role}) => {
+    //   const params = role ? { role } : {};
+    //   return Chore.find(params).sort({ createdAt: -1 }).filter({complete:false});
+    // },
     chore: async (parent, { choreId }) => {
       return Chore.findOne({ _id: choreId });
     },
@@ -27,45 +28,83 @@ const resolvers = {
   },
 
   Mutation: {
-    login: async (parent, { username, password }) => {
-      const user = await User.findOne({ username });
+    login: async (parent, { email, password }) => {
+      console.log("Attempting to log in user...", { email, password })
+      const user = await User.findOne({ email });
 
       if (!user) {
-        throw AuthenticationError;
+        throw new Error("User not found")
+        // throw AuthenticationError;
       }
-
+      
       const correctPw = await user.isCorrectPassword(password);
-
+      
       if (!correctPw) {
-        throw AuthenticationError;
+        throw new Error("Incorrect password")
+        // throw AuthenticationError;
       }
 
+      console.log(user)
       const token = signToken(user);
 
       return { token, user };
     },
 
 
-    addUser: async (parent, { userInput }) => {
-      const user = await User.create(userInput);
-      const token = signToken(user);
-      return { token, user };
+    addUser: async (parent, { username, email, password, lastName }) => {
+      console.log("Adding user...", { username, email, password, lastName })
+      try {
+        const user = new User({
+          username, 
+          email, 
+          password, 
+          lastName, 
+          children: []
+        });
+        await user.save()
+        const token = signToken(user);
+        return { token, user };
+      } catch (error) {
+        console.log("Failure adding user", error);
+        throw new Error("Failure adding user");
+      }
     },
 
-    
+    addChild: async (parent, { username, email, password, parent_id }) => {
+      console.log("Adding child...", { username, email, password, parent_id })
+      try {
+        const child = await User.create({ username, email, password, role: 'child' });
+        const parent = await User.findOneAndUpdate(
+            { _id: parent_id },
+            { $push: { children: child._id } },
+            { new: true }
+          )
+        if (!parent) throw new Error("Parent not found")
+        // const token = signToken(user);
+        return { parent, child };
+      } catch (error) {
+        console.log("Failure adding child user", error);
+        throw new Error("Failure adding child user");
+      }
+    },
 
-    addChore: async (parent, { choreInput }, context) => {
-      if (context.User) {
-        const chore = await Chore.create(choreInput);
 
-        await User.findOneAndUpdate(
-          { _id: context.User._id },
-          { $addToSet: { chores: chore._id } }
+    addChore: async (parent, { input }) => {
+      try {
+        // const chore = await Chore.create(choreinput);
+        console.log(input)
+        const userWithChores = await User.findOneAndUpdate(
+          { _id: input.userId },
+          { $addToSet: { chores: input } },
+          { new: true }
         );
 
-        return chore;
+        return userWithChores;
+
+      } catch (error) {
+        console.log(error)
       }
-      throw AuthenticationError;
+      
     },
     
     completeChore: async (parent, { choreId }) => {

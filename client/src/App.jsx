@@ -5,7 +5,9 @@ import Signup from './pages/Signup.jsx'
 import Profile from './pages/Profile.jsx'
 import FamilyProfile from './pages/FamilyProfile.jsx'
 import ChildProfile from './pages/ChildProfile.jsx'
+
 import { Route, Routes } from 'react-router-dom'
+import { Outlet } from 'react-router-dom';
 
 import {
   ApolloClient,
@@ -14,11 +16,13 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-i
+
+import './App.css'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
   uri: '/graphql',
+  // uri: location.href.includes('localhost') ? 'http://localhost:3001/graphql' : 'insert production server uri here',
 });
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
@@ -34,6 +38,8 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// console.log(authLink.concat(httpLink))
+
 const client = new ApolloClient({
   // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
   link: authLink.concat(httpLink),
@@ -41,21 +47,25 @@ const client = new ApolloClient({
 });
 
 function App() {
+
+
+
   return (
     <ApolloProvider client={client}>
       <header>
         <Navbar />
       </header>
       <main>
-        <Routes>
+        <Outlet />
+        {/* <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/child-profile" element={<ChildProfile />} />
           <Route path="/family-profile" element={<FamilyProfile />} />
-          <Route path="/family-calendar" element={<FamilyCalendar />} />
-        </Routes>
+          
+        </Routes> */}
       </main>
     </ApolloProvider>
   );

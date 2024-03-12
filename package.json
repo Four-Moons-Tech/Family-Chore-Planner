@@ -8,7 +8,8 @@
         "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
         "install": "cd server && npm i && cd ../client && npm i",
         "seed": "cd server && npm run seed",
-        "build": "cd client && npm run build"
+        "build": "cd client && npm run build",
+        "render-build": "npm install && npm run build"
     },
     "keywords": [],
     "author": "Bryan Chia, Anna Chuapetcharasopon, Anna Moon, Maryna Serdeshna",
@@ -17,6 +18,13 @@
         "concurrently": "^8.2.0"
     },
     "dependencies": {
-        "dotenv": "^16.4.5"
+        "@chakra-ui/icons": "^2.1.1",
+        "dotenv": "^16.4.5",
+
+        "react-confetti": "^6.1.0",
+
+        "framer-motion": "^11.0.8"
+        
+
     }
 }

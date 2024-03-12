@@ -18,6 +18,7 @@ module.exports = {
     }
 
     if (!token) {
+      // console.log("No token found. Continuing.")
       return req;
     }
 
@@ -30,8 +31,8 @@ module.exports = {
 
     return req;
   },
-  signToken: function ({ username, _id }) {
-    const payload = { username, _id };
+  signToken: function ({ email, username, _id }) {
+    const payload = { email, username, _id };
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 };
