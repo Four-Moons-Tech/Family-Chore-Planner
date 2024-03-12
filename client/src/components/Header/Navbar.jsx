@@ -75,7 +75,28 @@ const AppNavbar = () => {
                 </Box>
               </BreadcrumbItem>
               <ChevronRightIcon color='gray.500' />
-              
+              <BreadcrumbItem>
+                <Box
+                  as={Link}
+                  to="/family-profile"
+                  _hover={{ color: "blue.500" }}
+                  style={{ color: 'gray.600', textDecoration: 'none' }}
+                >
+                  Family Profile
+                </Box>
+              </BreadcrumbItem>
+              <ChevronRightIcon color='gray.500' />
+              <BreadcrumbItem>
+                <Box
+                  as={Link}
+                  to="/child-profile"
+                  _hover={{ color: "blue.500" }}
+                  style={{ color: 'gray.600', textDecoration: 'none' }}
+                >
+                  Child Profile
+                </Box>
+              </BreadcrumbItem>
+              <ChevronRightIcon color='gray.500' />
             </>
           ) : (
             <>
@@ -102,17 +123,7 @@ const AppNavbar = () => {
                 </Box>
               </BreadcrumbItem>
               <ChevronRightIcon color='gray.500' />
-              <BreadcrumbItem>
-                <Box
-                  as={Link}
-                  to="/family-profile"
-                  _hover={{ color: "blue.500" }}
-                  style={{ color: 'gray.600', textDecoration: 'none' }}
-                >
-                  Family Profile
-                </Box>
-              </BreadcrumbItem>
-              <ChevronRightIcon color='gray.500' />
+              
             </>
           )}
 
