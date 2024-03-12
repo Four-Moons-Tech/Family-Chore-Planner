@@ -52,7 +52,7 @@ function AddChildProfile({
                 variables
             });
 
-            // const { parent, child } = await response.json();
+           
             console.log(parent, child);
             // Auth.login(token);
         } catch (err) {
@@ -64,6 +64,8 @@ function AddChildProfile({
             username: '',
             password: '',
         });
+
+        
     };
     
 
@@ -145,6 +147,7 @@ function AddChildProfile({
                             type='submit'
                             variant='success'
                             onClick={handleFormSubmit}
+                            //close the modal on click
                             >
                             Submit
                         </Button>
