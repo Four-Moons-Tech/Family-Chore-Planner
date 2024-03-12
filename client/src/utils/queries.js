@@ -8,11 +8,11 @@ export const QUERY_USER = gql`
       lastName
       email
       role
+      totalEarnings
       children {
         _id
-        childUsername
-        password
         goal
+        password
       }
       chores {
         choreId
@@ -33,7 +33,12 @@ export const QUERY_ALL_USER = gql`
       lastName
       email
       role
-      children
+      totalEarnings
+      children {
+        _id
+        goal
+        password
+      }
       chores {
         choreId
         description

@@ -8,9 +8,10 @@ const typeDefs = `#graphql
     role: String!
     profileImage: String
     age: String
-    children: [ID]
+    children: [User]
     chores: [Chore]
-    
+    goal: String
+    totalEarnings: Float
   }
 
   type Chore {
@@ -71,7 +72,7 @@ const typeDefs = `#graphql
     addChild(username: String!, email: String!, password: String!, parent_id: ID!, age: String): ParentAndChild
     login(email: String!, password: String!): Auth
     addChore(input: ChoreInput ): User
-    completeChore(choreId: ID!): Chore 
+    completeChore(choreId: ID!, userId: ID!): Chore 
     updateUser(input: UserUpdateInput): User
 
   }

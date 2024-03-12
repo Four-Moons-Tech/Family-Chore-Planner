@@ -46,7 +46,7 @@ const userSchema = new Schema(
         children: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'User',
+                ref: 'user',
             },
         ],
 
