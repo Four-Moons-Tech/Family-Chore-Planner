@@ -39,8 +39,27 @@ const Signup = () => {
     };
 
     return (
-        <Box display="flex" justifyContent="center" minH="100vh">
-            <VStack spacing={4} maxWidth="lg" width="100%" p={8} borderWidth="1px" borderRadius="lg" boxShadow="lg">
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minH="100vh"
+            p={8}
+            backgroundImage="url('/images/iStock-1422245176.jpg')"
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
+            backgroundSize="cover"
+        >
+            <VStack
+                spacing={4}
+                maxWidth="lg"
+                width="full"
+                p={8}
+                borderWidth="1px"
+                borderRadius="lg"
+                boxShadow="lg"
+                bg="rgba(255, 255, 255, 0.8)"
+            >
                 <Text fontSize="2xl" fontWeight="bold">Sign Up</Text>
                 {data ? (
                     <Text>Success! You may now head <Link to="/">back to the homepage.</Link></Text>
