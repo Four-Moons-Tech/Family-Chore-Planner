@@ -30,7 +30,24 @@ import {
 import Confetti from 'react-confetti';
 import ProfileAvatar from '../components/Content/ProfileAvatar';
 
+// import { useQuery } from '@apollo/client';
+// import { useParams } from 'react-router-dom';
+// import { QUERY_USER, QUERY_ME } from '../utils/queries';
+// import Auth from '../utils/auth';
+
 const ChildProfile = () => {
+  // const { username: userParam } = useParams();
+
+  // const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  //   variables: { username: userParam },
+  // });
+
+  // const user = data?.me || data?.user || {};
+
+  // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+  //   console.log("Woo hoo this is connected!");
+  // }
+
   const [showSelectModal, setShowSelectModal] = useState(false);
   const [existingChores, setExistingChores] = useState([
     { id: 1, name: "Wash Dishes", time: "30 minutes", completed: false, reward: 5 },
