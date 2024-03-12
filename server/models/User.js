@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const choreSchema = require('./Chore');
+const {choreSchema} = require('./Chore');
 
 const bcrypt = require('bcrypt');
 

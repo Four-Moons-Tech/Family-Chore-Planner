@@ -107,13 +107,22 @@ const resolvers = {
       
     },
     
-    completeChore: async (parent, { choreId }) => {
-      const chore = await Chore.findOneAndUpdate(
-        { _id: choreId },
-        { complete: true },
-        { new: true }
-      )
-      return chore
+    //IMPORTANT!
+    // this mutation needs a userId parameter because...
+    // we need to find the USER not the chore...
+    // and update their list of chores...
+    // because when we ADD a chore, a Chore is not actually added to the database!
+    // a chore subdoc is simply added to the user.
+
+    // update typedefs!
+    // update client mutations!
+    // update variables in ChildProfile _completeChore
+    completeChore: async (parent, { choreId, userId }) => {
+      const user = await User.findById(userId)
+      const choreIndex = user.chores.findIndex(c => c.choreId === choreId)
+      user.chores[choreIndex].completed = true
+      await user.save()
+      return user.chores[choreIndex]
     },
 
     updateUser: async (parent, { input }) => {

@@ -8,36 +8,22 @@ export const QUERY_USER = gql`
       lastName
       email
       role
-      
+      # children {
+      #   _id
+      #   childUsername
+      #   password
+      #   goal
+      # }
+      chores {
+        choreId
+        description
+        dueDate
+        complete
+        payRate
+      }
     }
   }
 `;
-
-export const QUERY_ALL_USER = gql`
-  query users {
-    users {
-      _id
-      username
-      lastName
-      email
-      role
-      
-    }
-  }
-`;
-
-// export const QUERY_CHILD_USER = gql`
-//   query users() {
-//     users() {
-//       _id
-//       username
-//       lastName
-//       email
-//       role
-      
-//     }
-//   }
-// `;
 
 
 export const QUERY_CHORES = gql`
@@ -74,15 +60,15 @@ export const QUERY_ME = gql`
       lastName
       email
       role
-      children 
-      # {
-      #   _id
-      #   username
-      #   password
-      #   role
-      #   goal
+      children {
+        _id
+        username
+        password
+        role
+        goal
         
-      # }
+      }
     }
   }
 `;
+

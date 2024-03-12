@@ -1,5 +1,4 @@
 /*
-//         We need Sign up and Login
 //         const { loading, error, data } = useQuery(QUERY_USER, {
 //             variables: {
 //                 // Who's logged in?
@@ -7,6 +6,8 @@
 //             }
 //         })
 //     */
+//connect chores 
+// how close 
 
 
 import React, { useState } from 'react';
@@ -30,30 +31,27 @@ import {
 import Confetti from 'react-confetti';
 import ProfileAvatar from '../components/Content/ProfileAvatar';
 
-// import { useQuery } from '@apollo/client';
-// import { useParams } from 'react-router-dom';
-// import { QUERY_USER, QUERY_ME } from '../utils/queries';
-// import Auth from '../utils/auth';
+import Auth from '../utils/auth';
+import { useQuery, useMutation } from '@apollo/client'
+import { QUERY_USER } from '../utils/queries'
+import { ADD_CHORE, COMPLETE_CHORE } from '../utils/mutations'
+
+const availableChores = [
+  {
+    description: 'Do the dishes',
+    payRate: 3,
+    dueDate: '2024-04-19',
+
+  }
+]
 
 const ChildProfile = () => {
-  // const { username: userParam } = useParams();
-
-  // const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-  //   variables: { username: userParam },
-  // });
-
-  // const user = data?.me || data?.user || {};
-
-  // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-  //   console.log("Woo hoo this is connected!");
-  // }
-
   const [showSelectModal, setShowSelectModal] = useState(false);
-  const [existingChores, setExistingChores] = useState([
-    { id: 1, name: "Wash Dishes", time: "30 minutes", completed: false, reward: 5 },
-    { id: 2, name: "Clean Room", time: "1 hour", completed: false, reward: 10 },
-    { id: 3, name: "Take out Trash", time: "15 minutes", completed: false, reward: 3 },
-  ]);
+  // const [existingChores, setExistingChores] = useState([
+  //   { id: 1, name: "Wash Dishes", time: "30 minutes", completed: false, reward: 5 },
+  //   { id: 2, name: "Clean Room", time: "1 hour", completed: false, reward: 10 },
+  //   { id: 3, name: "Take out Trash", time: "15 minutes", completed: false, reward: 3 },
+  // ]);
   const [selectedChores, setSelectedChores] = useState([]);
   const [newChoreAdded, setNewChoreAdded] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -62,6 +60,32 @@ const ChildProfile = () => {
   const stackDirection = useBreakpointValue({ base: 'column', md: 'row' });
   const textColor = useColorModeValue('gray.800', 'white');
   const modalBg = useColorModeValue('white', 'gray.800');
+  
+  const user = Auth.getProfile()?.data
+
+  const [ _addChore, { 
+    error: addChoreError, 
+    data: addChoreData, 
+    loading: addChoreLoading
+  }] = useMutation(ADD_CHORE)
+
+  const [ _completeChore, { 
+    error: completeChoreError, 
+    data: completeChoreData, 
+    loading: completeChoreLoading
+  }] = useMutation(COMPLETE_CHORE)
+
+  let { 
+    data: queryUserData, 
+    error: queryUserError 
+  } = useQuery(QUERY_USER, {
+      variables: {
+          username: user.username
+      }
+  })
+  if (queryUserError) console.dir(queryUserError)
+  console.log("QUERY_USER:", queryUserData)
+
 
   const openSelectModal = () => {
     setShowSelectModal(true);
@@ -72,22 +96,44 @@ const ChildProfile = () => {
   };
 
   const addChore = (chore) => {
-    setSelectedChores([...selectedChores, chore]);
-    setNewChoreAdded(true);
+    // setSelectedChores([...selectedChores, chore]);
+    _addChore({
+      variables: {
+        input: {
+          ...chore,
+          userId: queryUserData.user._id
+        }
+      }
+    })
+    if (!addChoreError) {
+      setNewChoreAdded(true);
+      closeSelectModal()
+      location.reload()
+    } else {
+      alert('failure adding chore')
+    }
   };
 
   const completeChore = (choreId) => {
-    setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 3000);
-
-    const updatedChores = existingChores.map(chore => {
-      if (chore.id === choreId) {
-        return { ...chore, completed: true };
+    _completeChore({
+      variables: {
+        choreId
       }
-      return chore;
-    });
+    })
+    if (!completeChoreError) {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 3000);
+    } else {
+      alert('failure completing chore')
+    }
+    // const updatedChores = existingChores.map(chore => {
+    //   if (chore.id === choreId) {
+    //     return { ...chore, completed: true };
+    //   }
+    //   return chore;
+    // });
 
-    setExistingChores(updatedChores);
+    // setExistingChores(updatedChores);
   };
 
   const saveSelectedChores = () => {
@@ -115,18 +161,18 @@ const ChildProfile = () => {
             <Text as="h4" fontSize="2xl" color="blue.600" mb={4}>Child Profile</Text>
             <VStack spacing={3} width="100%">
               <Text fontWeight="bold" color={textColor}>Existing Chores:</Text>
-              {existingChores.map((chore) => (
-                <Box key={chore.id} display="flex" justifyContent="space-between" alignItems="center" width="100%" bg={modalBg} p={3} borderRadius="md">
+              {queryUserData?.user?.chores?.map((chore) => (
+                <Box key={chore.choreId} display="flex" justifyContent="space-between" alignItems="center" width="100%" bg={modalBg} p={3} borderRadius="md">
                   <Text color={chore.completed ? 'gray' : textColor}>
-                    {chore.name} - {chore.time} - Reward: ${chore.reward}
+                    {chore.description} - {chore.dueDate} - Reward: ${chore.payRate}
                   </Text>
                   {!chore.completed && (
-                    <Button colorScheme="blue" onClick={() => completeChore(chore.id)}>
-                      Completed
+                    <Button colorScheme="blue" onClick={() => completeChore(chore.choreId)}>
+                      Mark as complete
                     </Button>
                   )}
                   {chore.completed && (
-                    <Text color="green.500">${chore.reward} earned</Text>
+                    <Text color="green.500">${chore.payRate} earned</Text>
                   )}
                 </Box>
               ))}
@@ -150,9 +196,9 @@ const ChildProfile = () => {
               <VStack spacing={3}>
                 {newChoreAdded && <Text color="green.500">You've added a new chore!</Text>}
                 <Text fontWeight="bold" color={textColor}>Available Chores:</Text>
-                {existingChores.filter(chore => !chore.completed).map((chore) => (
-                  <Box key={chore.id} display="flex" justifyContent="space-between" alignItems="center" width="100%" bg={modalBg} p={3} borderRadius="md">
-                    <Text color={textColor}>{chore.name} - {chore.time}</Text>
+                {availableChores.map((chore) => (
+                  <Box key={chore.description} display="flex" justifyContent="space-between" alignItems="center" width="100%" bg={modalBg} p={3} borderRadius="md">
+                    <Text color={textColor}>{chore.description} - {chore.dueDate}</Text>
                     <Button colorScheme="green" onClick={() => addChore(chore)}>
                       Add
                     </Button>

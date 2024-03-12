@@ -68,11 +68,10 @@ export const ADD_CHORE = gql`
 
 
 export const COMPLETE_CHORE = gql`
-  mutation completeChore($chore: ID!, $complete: Boolean!) {
-    completeChore(choreId: $chore, complete: $complete) {
-      _id
+  mutation completeChore($choreId: ID!) {
+    completeChore(choreId: $choreId) {
+      choreId
       complete
-      
     }
   }
 `;
