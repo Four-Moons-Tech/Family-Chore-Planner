@@ -52,7 +52,8 @@ function AddChildProfile({
                 variables
             });
 
-           
+            onClose()
+            location.reload()
             console.log(parent, child);
             // Auth.login(token);
         } catch (err) {
@@ -100,6 +101,17 @@ function AddChildProfile({
                                 required
                             />
                         </div>
+                        <div className='form-field'>
+                            <label htmlFor='age'>How old is your child?</label>
+                            <input
+                                type='text'
+                                placeholder='Age'
+                                name='age'
+                                onChange={handleInputChange}
+                                // value={userFormData.password}
+                                required
+                            />
+                        </div>
 
                         <div className='form-field'>
                             <label htmlFor='email'>Email</label>
@@ -124,6 +136,7 @@ function AddChildProfile({
                                 required
                             />
                         </div>
+                        
                         {/* <div className='form-field'>
                             <label htmlFor='role'>Role</label>
                             <select name="role" id="role">

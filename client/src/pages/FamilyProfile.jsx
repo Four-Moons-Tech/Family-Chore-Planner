@@ -21,35 +21,40 @@ import {
 import { QUERY_ALL_USER, QUERY_USER } from '../utils/queries.js'
 import Auth from '../utils/auth.js'
 import ChildList from '../components/Content/ChildList.jsx';
+import Greeting from '../components/Content/Greeting.jsx';
 
-const FamilyProfile =()=>{
-   const { loading, data } = useQuery(QUERY_ALL_USER);
+const FamilyProfile = () => {
+    const { loading, data } = useQuery(QUERY_ALL_USER);
 
-    const children = data?.users || [];   
+    const children = data?.users || [];
     console.log("this is a child", children[0])
     console.log('data', data)
-    // const { 
-    //     data: userData, 
-    //     loading: userLoading, 
-    //     error: userError 
-    // } = useQuery(QUERY_USER, { variables: { username: Auth.getProfile()?.data.username } })
-    // console.log("userData:", userData)
+   
     const { isOpen, onOpen, onClose } = useDisclosure()
-
+    // const {
+    //     _id: childId,
+    //     lastName,
+    //     username,
+    // } = child
     return (
 
         <>
-        <Button backgroundColor="purple" margin="50px" onClick={onOpen}>Create Child User</Button>
+            <Greeting
+                // _id={childId}
+                // username={username}
+                // lastName={lastName}
+            />
+            <Button backgroundColor="purple" margin="50px" onClick={onOpen}>Create Child User</Button>
             <AddChildProfile
                 isOpen={isOpen}
                 onClose={onClose}
             />
-        < ChildList children={children} />
+            < ChildList children={children} />
         </>
-        
+
     )
 }
- 
+
 // const user = Auth.getProfile()?.data
 // if (user) {
 //     const payload = {

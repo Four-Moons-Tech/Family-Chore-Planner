@@ -74,10 +74,10 @@ const resolvers = {
       }
     },
 
-    addChild: async (parent, { username, email, password, parent_id }) => {
-      console.log("Adding child...", { username, email, password, parent_id })
+    addChild: async (parent, { username, email, password, parent_id, age }) => {
+      console.log("Adding child...", { username, email, password, parent_id,age })
       try {
-        const child = await User.create({ username, email, password, role: 'child' });
+        const child = await User.create({ username, email, password, role: 'Child', age });
         const parent = await User.findOneAndUpdate(
             { _id: parent_id },
             { $push: { children: child._id } },

@@ -7,6 +7,7 @@ const typeDefs = `#graphql
     password: String
     role: String!
     profileImage: String
+    age: String
     children: [ID]
     chores: [Chore]
     
@@ -67,7 +68,7 @@ const typeDefs = `#graphql
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!, lastName: String!): Auth
-    addChild(username: String!, email: String!, password: String!, parent_id: ID!): ParentAndChild
+    addChild(username: String!, email: String!, password: String!, parent_id: ID!, age: String): ParentAndChild
     login(email: String!, password: String!): Auth
     addChore(input: ChoreInput ): User
     completeChore(choreId: ID!): Chore 
