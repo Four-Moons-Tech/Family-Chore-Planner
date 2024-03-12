@@ -4,11 +4,15 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('chores');
+      const users = await User.find({}).populate('chores');
+      // console.log(users)
+      return users
     },
     user: async (parent, { username }) => {
       console.log("getting user:", username)
-      return User.findOne({ username }).populate('chores');
+      return User.findOne({ username })
+        .populate('chores')
+        .populate('children')
     },
 
     // chore: async (parent, { role}) => {
@@ -92,7 +96,7 @@ const resolvers = {
     addChore: async (parent, { input }) => {
       try {
         // const chore = await Chore.create(choreinput);
-        console.log(input)
+        console.log("ADD CHORE INPUT: ", input)
         const userWithChores = await User.findOneAndUpdate(
           { _id: input.userId },
           { $addToSet: { chores: input } },

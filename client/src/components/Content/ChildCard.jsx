@@ -18,9 +18,18 @@ import { useMutation } from "@apollo/client";
 import UserProfile from "./UserProfile";
 import ChoreList from "./ChoreList";
 
-const ChildCard = function () {
+const ChildCard = function ({
+    child
+}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
-
+    const {
+        _id: childId,
+        email,
+        chores,
+        // goal,
+        username,
+        // showUsername = true,
+    } = child
     
     // setChildInfo()
 
@@ -38,14 +47,19 @@ const ChildCard = function () {
             border="1px"
             borderColor="blue"
         >
-        <UserProfile />
+        <UserProfile 
+            _id={childId}
+            chores={chores}
+            username={username}
+            email={email}
+        />
 
             <Stack >
                 <CardBody >
-                    <Heading size='md'>Child Username</Heading>
+                    <Heading size='md'>{username}</Heading>
 
                     
-                    <ChoreList/>
+                    <ChoreList chores={chores}/>
                     
 
                 </CardBody>
@@ -59,6 +73,7 @@ const ChildCard = function () {
                     <AddChoreModal
                         isOpen={isOpen}
                         onClose={onClose}
+                        childId={childId}
                     />
 
                 </CardFooter>

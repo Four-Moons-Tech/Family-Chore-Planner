@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from 'react';
 import { ADD_CHORE } from '../../utils/mutations'
-
+// import Auth from '../../auth.js'
 import { useMutation } from '@apollo/client';
 
 import {
@@ -17,12 +17,15 @@ import {
 
 const AddChoreModal = function ({
     isOpen,
-    onClose
+    onClose,
+    childId
 }) {
     const [choreFormData, setChoreFormData] = useState({ description: '', payRate: '', dueDate: '', userId: ''});
 
     const [addChore, { error, data }] = useMutation(ADD_CHORE);
-    if (error) console.log("Error adding chore:", error)
+    if (error) {
+        console.log("Error adding chore:", error)
+    }
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -33,16 +36,18 @@ const AddChoreModal = function ({
 
         try {
             const variables = {
-                ...choreFormData,
-                choreId: chore.id
+                input: {
+                    ...choreFormData,
+                    payRate: Number(choreFormData.payRate),
+                    userId: childId
+                }
             }
             console.log(variables)
-            const { chore } = await addChore({
-                variables: {input: {...choreFormData}}
-            });
+            const test = await addChore({variables});
 
-            console.log(chore);
-
+            // console.log(test);
+            onClose()
+            location.reload()
         } catch (err) {
             console.error(err);
         }
@@ -68,7 +73,7 @@ const AddChoreModal = function ({
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <form onSubmit={handleFormSubmit}>
-                        <div className='form-field'>
+                            {/* <div className='form-field'>
                                 <label htmlFor='text'>ID</label>
                                 <input
                                     type='text'
@@ -78,7 +83,7 @@ const AddChoreModal = function ({
                                     value={choreFormData.userId}
                                     required
                                 />
-                            </div>
+                            </div> */}
                             <div className='form-field'>
                                 <label htmlFor='username'>Description</label>
                                 <input

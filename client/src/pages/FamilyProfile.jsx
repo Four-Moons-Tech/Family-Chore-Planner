@@ -17,16 +17,23 @@ import {
 
 } from '@chakra-ui/react'
 
-import { useQuery } from '@apollo/client';
-import { QUERY_ALL_USER } from '../utils/queries.js'
+
+import { QUERY_ALL_USER, QUERY_USER } from '../utils/queries.js'
 import Auth from '../utils/auth.js'
 import ChildList from '../components/Content/ChildList.jsx';
 
 const FamilyProfile =()=>{
    const { loading, data } = useQuery(QUERY_ALL_USER);
-    const children = data?.children || [];   
-    console.log("this is a child", children)
+
+    const children = data?.users || [];   
+    console.log("this is a child", children[0])
     console.log('data', data)
+    // const { 
+    //     data: userData, 
+    //     loading: userLoading, 
+    //     error: userError 
+    // } = useQuery(QUERY_USER, { variables: { username: Auth.getProfile()?.data.username } })
+    // console.log("userData:", userData)
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (

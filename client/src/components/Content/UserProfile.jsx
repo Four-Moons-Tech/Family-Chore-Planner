@@ -10,20 +10,16 @@ import {
 } from '@chakra-ui/react';
 
 
-function UserProfile() {
+function UserProfile(props) {
 
-    const [UserInfo, setUserInfo] = useState({
-        username: '',
-        email: '',
-        age: '',
-        lastName: '',
-        goal: '',
-        role: '',
-        // totalEarnings: ''
-
-
-
-    })
+    const {
+        _id,
+        email,
+        
+        // goal,
+        username,
+        // showUsername = true,
+    } = props
 
 
     return (
@@ -40,8 +36,8 @@ function UserProfile() {
                         <Heading size='md'>Username</Heading>
                         <UnorderedList>
                             <ListItem ></ListItem>
-                            <ListItem> {UserInfo.age} </ListItem>
-                            <ListItem>{UserInfo.goal}</ListItem>
+                            <ListItem> {username} </ListItem>
+                            <ListItem>{email}</ListItem>
                         </UnorderedList>
 
                     </CardBody>
