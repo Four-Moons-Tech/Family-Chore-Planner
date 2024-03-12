@@ -3,16 +3,11 @@ const typeDefs = `
     _id: ID
     username: String
     lastName: String
-    email: String
+    email: String!
     password: String
-    children: [ChildUser]
-    
-  }
-
-  type ChildUser {
-    _id: ID
-    childUsername: String
-    password: String
+    role: String!
+    profileImage: String
+    children: [User]
     chores: [Chore]
     
   }
@@ -23,14 +18,13 @@ const typeDefs = `
     payRate: Float!
     dueDate: String!
     complete: Boolean
-    # child_id: 
+    
   }
 
   input ChoreInput{
     description: String!
     payRate: Float!
-    dueDate: String!
-    # child_id: 
+    dueDate: String!  
   }
 
   input UserInput {
@@ -38,44 +32,30 @@ const typeDefs = `
     lastName: String!
     email: String!
     password: String!
+    profileImage: String
   }
 
-   input ChildUserInput {
-    childUsername: String!
-    password: String! 
-  }
-
-  type UserAuth {
+  type Auth {
     token: ID!
     user: User
   }
-
-  type ChildAuth {
-    token: ID!
-    user: ChildUser
-  }
-  
 
   type Query {
     me: User
     user(username: String): User
     users: [User]
-    childUser (childUsername: String): ChildUser
-    childUsers: [ChildUser]
-    children (username: String) :[ChildUser]
-    chores(childUsername: String): [Chore]
+    children:[User]
+    chores(username: String ): [Chore]
     chore(choreId: ID!): Chore
   }
 
   type Mutation {
-    addUser(input: UserInput): UserAuth
-    addChildUser(input: ChildUserInput): ChildAuth
-    userLogin(email: String!, password: String!): UserAuth
-    childUserLogin(username: String!,password: String! ): ChildAuth
+    addUser(input: UserInput): Auth
+    login(email: String!, password: String!): Auth
     addChore(input: ChoreInput ): Chore
-    completeChore(choreId: ID!): Chore
- 
-    
+    completeChore(choreId: ID!): Chore 
+    updateUser(input: UserInput): User
+
   }
 `;
 

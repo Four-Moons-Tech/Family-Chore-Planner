@@ -7,24 +7,14 @@ export const QUERY_USER = gql`
       username
       lastName
       email
+      role
       children {
         _id
         childUsername
         password
         goal
       }
-    }
-  }
-`;
-
-export const QUERY_CHILD_USER = gql`
-  query childUser($childUsername: String!) {
-    childUser(childUsername: $childUsername) {
-      _id
-      childUsername
-      password
-      goal
-      chores {
+      chore{
         choreId
         description
         dueDate
@@ -34,6 +24,7 @@ export const QUERY_CHILD_USER = gql`
     }
   }
 `;
+
 
 export const QUERY_CHORES = gql`
   query chores {
@@ -68,18 +59,14 @@ export const QUERY_ME = gql`
       username
       lastName
       email
+      role
       children {
         _id
-        childUsername
+        username
         password
+        role
         goal
-        chores {
-          choreId
-          description
-          dueDate
-          complete
-          payRate 
-        }
+        
       }
     }
   }
