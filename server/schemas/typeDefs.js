@@ -14,9 +14,9 @@ const typeDefs = `#graphql
 
   type Chore {
     choreId: ID
-    description: String!
-    payRate: Int!
-    dueDate: String!
+    description: String
+    payRate: Int
+    dueDate: String
     complete: Boolean
     userId: ID
     
@@ -24,7 +24,7 @@ const typeDefs = `#graphql
 
   input ChoreInput{
     description: String!
-    payRate: Float!
+    payRate: Int!
     dueDate: String! 
     userId: ID 
   }

@@ -8,12 +8,12 @@ export const QUERY_USER = gql`
       lastName
       email
       role
-      # children {
-      #   _id
-      #   childUsername
-      #   password
-      #   goal
-      # }
+      children {
+        _id
+        childUsername
+        password
+        goal
+      }
       chores {
         choreId
         description
@@ -25,6 +25,25 @@ export const QUERY_USER = gql`
   }
 `;
 
+export const QUERY_ALL_USER = gql`
+  query users{
+    users {
+      _id
+      username
+      lastName
+      email
+      role
+      children
+      chores {
+        choreId
+        description
+        dueDate
+        complete
+        payRate
+      }
+    }
+  }
+`;
 
 export const QUERY_CHORES = gql`
   query chores {

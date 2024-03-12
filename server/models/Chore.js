@@ -20,9 +20,9 @@ const choreSchema = new Schema(
         dueDate: {
             type: Date, 
             required: true,
-            get:(date)=>{
-                return date.toISOString().split("T")[0]
-            }
+            // get:(date)=>{
+            //     return date.toISOString().split("T")[0]
+            // }
         },     
         complete: {
             type: Boolean,
