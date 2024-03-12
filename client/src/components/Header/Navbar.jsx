@@ -29,93 +29,95 @@ const AppNavbar = () => {
 
 
 
-//     <>
-//     <Box display="flex" justifyContent="center">
-//       {Auth.loggedIn() ? (
-//         <>
-//           <button style={{ marginRight: '1rem' }} onClick={Auth.logout}>
-//             Sign out
-//           </button>
-//         </>
-//       ):(
-//         <>
-//           <Link to="/login" style={{ marginRight: '1rem' }}>Log in</Link>
-//           <Link to="/signup" style={{ marginRight: '1rem' }}>Sign up</Link>
-//         </>
-//       )}
-//       <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
-//       <Link to="/child-profile">My profile</Link>
-//     </Box>
+    //     <>
+    //     <Box display="flex" justifyContent="center">
+    //       {Auth.loggedIn() ? (
+    //         <>
+    //           <button style={{ marginRight: '1rem' }} onClick={Auth.logout}>
+    //             Sign out
+    //           </button>
+    //         </>
+    //       ):(
+    //         <>
+    //           <Link to="/login" style={{ marginRight: '1rem' }}>Log in</Link>
+    //           <Link to="/signup" style={{ marginRight: '1rem' }}>Sign up</Link>
+    //         </>
+    //       )}
+    //       <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
+    //       <Link to="/child-profile">My profile</Link>
+    //     </Box>
+    <>
 
+      <Flex justifyContent="center" fontSize="lg" fontWeight="bold" padding="1rem" backgroundColor="gray.100" boxShadow="md">
+        <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
+          <BreadcrumbItem>
+            <Box
+              as={Link}
+              to="/"
+              _hover={{ color: "blue.500" }}
+              style={{ color: 'gray.600', textDecoration: 'none' }}
+            >
+              Home
+            </Box>
+          </BreadcrumbItem>
 
-    <Flex justifyContent="center" fontSize="lg" fontWeight="bold" padding="1rem" backgroundColor="gray.100" boxShadow="md">
-      <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
-        <BreadcrumbItem>
-          <Box
-            as={Link}
-            to="/"
-            _hover={{ color: "blue.500" }}
-            style={{ color: 'gray.600', textDecoration: 'none' }}
-          >
-            Home
-          </Box>
-        </BreadcrumbItem>
+          {Auth.loggedIn() ? (
+            <>
+              <BreadcrumbItem>
+                <Box
+                  as={Link}
+                  to="/"
+                  onClick={Auth.logout}
+                  _hover={{ color: "blue.500" }}
+                  style={{ color: 'gray.600', textDecoration: 'none' }}
+                >
+                  Sign out
+                </Box>
+              </BreadcrumbItem>
+              <ChevronRightIcon color='gray.500' />
+              
+            </>
+          ) : (
+            <>
+              <BreadcrumbItem>
+                <Box
+                  as={Link}
+                  to="/login"
+                  _hover={{ color: "blue.500" }}
+                  style={{ color: 'gray.600', textDecoration: 'none' }}
+                >
+                  Log in
+                </Box>
+              </BreadcrumbItem>
+              <ChevronRightIcon color='gray.500' />
 
-        {Auth.loggedIn() ? (
-          <>
-            <BreadcrumbItem>
-              <Box
-                as={Link}
-                to="/"
-                onClick={Auth.logout}
-                _hover={{ color: "blue.500" }}
-                style={{ color: 'gray.600', textDecoration: 'none' }}
-              >
-                Sign out
-              </Box>
-            </BreadcrumbItem>
-            <ChevronRightIcon color='gray.500' />
-          </>
-        ) : (
-          <>
-            <BreadcrumbItem>
-              <Box
-                as={Link}
-                to="/login"
-                _hover={{ color: "blue.500" }}
-                style={{ color: 'gray.600', textDecoration: 'none' }}
-              >
-                Log in
-              </Box>
-            </BreadcrumbItem>
-            <ChevronRightIcon color='gray.500' />
+              <BreadcrumbItem>
+                <Box
+                  as={Link}
+                  to="/signup"
+                  _hover={{ color: "blue.500" }}
+                  style={{ color: 'gray.600', textDecoration: 'none' }}
+                >
+                  Sign up
+                </Box>
+              </BreadcrumbItem>
+              <ChevronRightIcon color='gray.500' />
+              <BreadcrumbItem>
+                <Box
+                  as={Link}
+                  to="/family-profile"
+                  _hover={{ color: "blue.500" }}
+                  style={{ color: 'gray.600', textDecoration: 'none' }}
+                >
+                  Family Profile
+                </Box>
+              </BreadcrumbItem>
+              <ChevronRightIcon color='gray.500' />
+            </>
+          )}
 
-            <BreadcrumbItem>
-              <Box
-                as={Link}
-                to="/signup"
-                _hover={{ color: "blue.500" }}
-                style={{ color: 'gray.600', textDecoration: 'none' }}
-              >
-                Sign up
-              </Box>
-            </BreadcrumbItem>
-            <ChevronRightIcon color='gray.500' />
-          </>
-        )}
-
-        <BreadcrumbItem isCurrentPage>
-          <Box
-            as={Link}
-            to="/child-profile"
-            _hover={{ color: "blue.500" }}
-            style={{ color: 'gray.600', textDecoration: 'none' }}
-          >
-            My profile
-          </Box>
-        </BreadcrumbItem>
-      </Breadcrumb>
-    </Flex>
+          </Breadcrumb>
+      </Flex>
 
 
     </>

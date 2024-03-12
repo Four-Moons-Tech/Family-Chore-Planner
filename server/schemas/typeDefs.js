@@ -15,7 +15,7 @@ const typeDefs = `#graphql
   type Chore {
     choreId: ID
     description: String!
-    payRate: Float!
+    payRate: Int!
     dueDate: String!
     complete: Boolean
     userId: ID
@@ -26,7 +26,7 @@ const typeDefs = `#graphql
     description: String!
     payRate: Float!
     dueDate: String! 
-    user_id: ID 
+    userId: ID 
   }
 
   
@@ -69,7 +69,7 @@ const typeDefs = `#graphql
     addUser(username: String!, email: String!, password: String!, lastName: String!): Auth
     addChild(username: String!, email: String!, password: String!, parent_id: ID!): ParentAndChild
     login(email: String!, password: String!): Auth
-    addChore(input: ChoreInput ): UserWithChores
+    addChore(input: ChoreInput ): User
     completeChore(choreId: ID!): Chore 
     updateUser(input: UserUpdateInput): User
 
