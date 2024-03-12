@@ -31,6 +31,11 @@ const userSchema = new Schema(
             // required: true,
             default: "Parent",
         },
+        age: {
+            type: Number,
+            // required: true,
+            
+        },
         profileImage:{
             type: String
         },

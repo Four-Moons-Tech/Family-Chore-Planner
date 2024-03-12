@@ -25,7 +25,7 @@ const ChildList = ({
                 <section className="portfolio container-fluid text-center pb-5">
                     <div className="row gy-4">
                         {children.map((child) => (
-                            <ChildCard child={child} key={child._id}/>
+                            <ChildCard  child={child} key={child._id}/>
                         ))}
 
 

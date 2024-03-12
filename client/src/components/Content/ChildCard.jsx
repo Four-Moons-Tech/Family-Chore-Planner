@@ -26,8 +26,9 @@ const ChildCard = function ({
         _id: childId,
         email,
         chores,
-        // goal,
+        goal,
         username,
+        age
         // showUsername = true,
     } = child
     
@@ -46,12 +47,15 @@ const ChildCard = function ({
             display="flex"
             border="1px"
             borderColor="blue"
+            marginBottom='15px'
         >
         <UserProfile 
             _id={childId}
             chores={chores}
             username={username}
             email={email}
+            goal={goal}
+            age ={age}
         />
 
             <Stack >

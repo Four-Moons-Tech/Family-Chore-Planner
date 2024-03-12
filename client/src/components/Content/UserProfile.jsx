@@ -15,10 +15,10 @@ function UserProfile(props) {
     const {
         _id,
         email,
-        
-        // goal,
+        age,
+        goal,
         username,
-        // showUsername = true,
+        
     } = props
 
 
@@ -33,11 +33,12 @@ function UserProfile(props) {
 
                 <Stack>
                     <CardBody margin="10px">
-                        <Heading size='md'>Username</Heading>
+                        <Heading size='md'>{username}</Heading>
                         <UnorderedList>
-                            <ListItem ></ListItem>
-                            <ListItem> {username} </ListItem>
+                            
+                            <ListItem> {age} years old </ListItem>
                             <ListItem>{email}</ListItem>
+                            <ListItem>{username} is saving for {goal}</ListItem>
                         </UnorderedList>
 
                     </CardBody>

@@ -27,18 +27,7 @@ const AppNavbar = () => {
 
           {Auth.loggedIn() ? (
             <>
-              <BreadcrumbItem>
-                <Box
-                  as={Link}
-                  to="/"
-                  onClick={Auth.logout}
-                  _hover={{ color: "blue.500" }}
-                  style={{ color: 'gray.600', textDecoration: 'none' }}
-                >
-                  Sign out
-                </Box>
-              </BreadcrumbItem>
-              <ChevronRightIcon color='gray.500' />
+              
               <BreadcrumbItem>
                 <Box
                   as={Link}
@@ -60,6 +49,19 @@ const AppNavbar = () => {
                   Child Profile
                 </Box>
               </BreadcrumbItem>
+              <ChevronRightIcon color='gray.500' />
+              <BreadcrumbItem>
+                <Box
+                  as={Link}
+                  to="/"
+                  onClick={Auth.logout}
+                  _hover={{ color: "blue.500" }}
+                  style={{ color: 'gray.600', textDecoration: 'none' }}
+                >
+                  Sign out
+                </Box>
+              </BreadcrumbItem>
+              <ChevronRightIcon color='gray.500' />
             </>
           ) : (
             <>
@@ -91,7 +93,9 @@ const AppNavbar = () => {
 
         </Breadcrumb>
       </Flex>
-
+      <Box>
+        <h2>You are loggid in as {user.username}</h2>
+      </Box>
 
     </>
 
