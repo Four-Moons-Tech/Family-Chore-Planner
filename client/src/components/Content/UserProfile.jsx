@@ -1,7 +1,6 @@
 import ProfileAvatar from "./ProfileAvatar";
 import { useState } from "react";
-// import React from 'react'
-// React.useState()
+
 import {
     ListItem,
     UnorderedList,
@@ -20,14 +19,7 @@ function UserProfile({
     username,
 }) {
 
-    // const {
-    //     _id,
-    //     email,
-    //     age,
-    //     goal,
-    //     username,
-        
-    // } = props
+    
 
 
     return (
@@ -46,7 +38,9 @@ function UserProfile({
                             
                             <ListItem> {age||'???'} years old </ListItem>
                             <ListItem>{email}</ListItem>
-                            <ListItem>{username} is saving for {goal}</ListItem>
+                            <ListItem>{username} 
+                            {/* has {choreCount || 0 } chores. */}
+                            is saving for {goal}</ListItem>
                         </UnorderedList>
 
                     </CardBody>

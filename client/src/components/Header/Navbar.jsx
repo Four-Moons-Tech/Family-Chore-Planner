@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Breadcrumb, BreadcrumbItem, Flex } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, Flex, Spacer } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons"
 import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
@@ -16,41 +16,7 @@ const AppNavbar = () => {
     }
   })
 
-  // const links = [
-  //   {
-  //     to: '/',
-  //     text: 'Home'
-  //   }
-  // ]
-
-  // if (error) {
-  //   links.push(...[
-  //     {
-  //       to: '/login',
-  //       text: 'Log in'
-  //     },
-  //     {
-  //       to: '/signup',
-  //       text: 'Sign up'
-  //     }
-  //   ])
-  // } else {
-  //   links.push({
-  //     onClick: Auth.signOut,
-  //     text: 'Sign out'
-  //   })
-  //   if (data?.user?.role === 'Parent') {
-  //     links.push({
-  //       to: '/family-profile',
-  //       text: 'Family profile'
-  //     })
-  //   } else {
-  //     links.push({
-  //       to: '/child-profile',
-  //       text: 'Child profile'
-  //     })
-  //   }
-  // }
+  
 
   return (
 
@@ -113,12 +79,13 @@ const AppNavbar = () => {
                   Sign out
                 </Box>
               </BreadcrumbItem>
-
-              <ChevronRightIcon color='gray.500' />
-              <Box>
-                <h2>Hello {user.username}</h2>
-              </Box>
-
+              <Spacer />
+              {Auth.loggedIn() && (
+                
+            <Box ml={"70px"}>
+              <h2>Hello, {user.username}!</h2>
+            </Box>
+        )}
             </>
           ) : (
             <>
@@ -148,11 +115,7 @@ const AppNavbar = () => {
           )}
 
         </Breadcrumb>
-        {Auth.loggedIn() && (
-            <Box>
-              <h2>You are logged in as {user.username}</h2>
-            </Box>
-        )}
+        
       </Flex>
 
 

@@ -36,14 +36,14 @@ import { useQuery, useMutation } from '@apollo/client'
 import { QUERY_USER } from '../utils/queries'
 import { ADD_CHORE, COMPLETE_CHORE } from '../utils/mutations'
 
-const availableChores = [
-  {
-    description: 'Do the dishes',
-    payRate: 3,
-    dueDate: '2024-04-19',
+// const availableChores = [
+//   {
+//     description: 'Do the dishes',
+//     payRate: 3,
+//     dueDate: '2024-04-19',
 
-  }
-]
+//   }
+// ]
 
 const ChildProfile = () => {
   const [showSelectModal, setShowSelectModal] = useState(false);

@@ -5,9 +5,7 @@ const resolvers = {
   Query: {
     users: async () => {
       const users = await User.find({}).populate('chores')
-      // .populate('totalEarnings').populate('choreCount')
-      // .populate('childrenCount');
-      // console.log(users)
+      
       return users
     },
     user: async (parent, { username }) => {
@@ -15,15 +13,10 @@ const resolvers = {
       return User.findOne({ username })
         .populate('chores')
         .populate('children')
-        // .populate('totalEarnings')
-        // .populate('choreCount')
-        // .populate('childrenCount')
+        
     },
 
-    // chore: async (parent, { role}) => {
-    //   const params = role ? { role } : {};
-    //   return Chore.find(params).sort({ createdAt: -1 }).filter({complete:false});
-    // },
+    
     chore: async (parent, { choreId }) => {
       return Chore.findOne({ _id: choreId });
     },

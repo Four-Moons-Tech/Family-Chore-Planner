@@ -1,5 +1,5 @@
 
-import { CheckCircleIcon, CloseIcon,  } from '@chakra-ui/icons'
+import { CheckCircleIcon, CloseIcon, DeleteIcon, EditIcon  } from '@chakra-ui/icons'
 import { 
     Button ,
     useDisclosure
@@ -50,7 +50,7 @@ const ChoreList = function ({chores = []}) {
                             <div key={chore.choreId} className='chore-card'>
                                 <div>
                                     <h4>
-                                        {chore.description}<br />
+                                        {chore.description} <br />
                                     </h4>
                                     <div className="chore-card-field">
                                         Complete: &nbsp;
@@ -73,14 +73,17 @@ const ChoreList = function ({chores = []}) {
                                     <Button
                                         onClick={()=>{deleteChore(chore)}}
                                     >
-                                        Remove chore
+                                        
+                                        <DeleteIcon/>
                                     </Button>
                                     {/* &nbsp; is an HTML entity representing a space */}
                                     &nbsp;
                                     <Button
+                                      
                                         onClick={onOpen}
                                     >
-                                        Edit chore
+                                        
+                                        <EditIcon/>
                                     </Button>
                                     <AddChoreModal
                                         isOpen={isOpen}
