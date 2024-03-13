@@ -187,7 +187,7 @@ const ChildProfile = () => {
           <Box p={5} borderWidth="1px" borderRadius="lg" width="full" maxWidth="lg" bg={modalBg}>
             <Text fontSize="xl" fontWeight="bold" mb={3} color={textColor}>Savings Goal</Text>
             <Divider />
-            <Text mt={3} color={textColor}>{user.goal || "No goal set"}</Text>
+            <Text mt={3} color={textColor}>${queryUserData?.user?.goal || "No goal set"}</Text>
           </Box>
           <Box p={5} borderWidth="1px" borderRadius="lg" width="full" maxWidth="lg" bg={modalBg}>
             <Text fontSize="xl" fontWeight="bold" mb={3} color={textColor}>Total Earnings</Text>
@@ -195,9 +195,9 @@ const ChildProfile = () => {
             <Text mt={3} color={textColor}>${queryUserData?.user?.totalEarnings || 0}</Text>
           </Box>
           <Box p={5} borderWidth="1px" borderRadius="lg" width="full" maxWidth="lg" bg={modalBg}>
-            {/* <div>
-              <ProgressBar/>
-            </div> */}
+            <div>
+              <ProgressBar child={queryUserData?.user}/>
+            </div>
           </Box>
         </Stack>
         {/* <Modal isOpen={showSelectModal} onClose={closeSelectModal}>

@@ -22,6 +22,7 @@ const ChildCard = function ({
     child
 }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    
     const {
         _id: childId,
         email,
@@ -31,6 +32,8 @@ const ChildCard = function ({
         age
         // showUsername = true,
     } = child
+
+    // console.log("ChildCard child:", child)
     
     // setChildInfo()
 
@@ -44,19 +47,20 @@ const ChildCard = function ({
             direction={{ base: 'column', lg: 'row' }}
             overflow='hidden'
             variant='outline'
-            display="flex"
+            display="grid"
             border="1px"
             borderColor="blue"
             marginBottom='15px'
+            className="child-card"
         >
-        <UserProfile 
-            _id={childId}
-            chores={chores}
-            username={username}
-            email={email}
-            goal={goal}
-            age ={age}
-        />
+            <UserProfile 
+                _id={childId}
+                chores={chores}
+                username={username}
+                email={email}
+                goal={goal}
+                age ={age}
+            />
 
             <Stack >
                 <CardBody >

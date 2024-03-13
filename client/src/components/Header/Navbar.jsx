@@ -4,17 +4,62 @@ import { ChevronRightIcon } from "@chakra-ui/icons"
 import { Link } from 'react-router-dom';
 import Auth from '../../utils/auth';
 
+import { useQuery } from '@apollo/client'
+import { QUERY_USER } from '../../utils/queries'
+
 const AppNavbar = () => {
   const user = Auth.getProfile()?.data
-  console.log(user)
+  
+  const { data, loading, error } = useQuery(QUERY_USER, {
+    variables: {
+      username: user?.username
+    }
+  })
+
+  // const links = [
+  //   {
+  //     to: '/',
+  //     text: 'Home'
+  //   }
+  // ]
+
+  // if (error) {
+  //   links.push(...[
+  //     {
+  //       to: '/login',
+  //       text: 'Log in'
+  //     },
+  //     {
+  //       to: '/signup',
+  //       text: 'Sign up'
+  //     }
+  //   ])
+  // } else {
+  //   links.push({
+  //     onClick: Auth.signOut,
+  //     text: 'Sign out'
+  //   })
+  //   if (data?.user?.role === 'Parent') {
+  //     links.push({
+  //       to: '/family-profile',
+  //       text: 'Family profile'
+  //     })
+  //   } else {
+  //     links.push({
+  //       to: '/child-profile',
+  //       text: 'Child profile'
+  //     })
+  //   }
+  // }
+
   return (
 
 
     <>
 
-      <Flex justifyContent="center" fontSize="lg" fontWeight="bold" padding="1rem" backgroundColor="gray.100" boxShadow="md">
+      <Flex justifyContent="space-around" fontSize="lg" fontWeight="bold" padding="1rem" backgroundColor="gray.100" boxShadow="md">
         <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
-          <BreadcrumbItem>
+        <BreadcrumbItem>
             <Box
               as={Link}
               to="/"
@@ -25,31 +70,38 @@ const AppNavbar = () => {
             </Box>
           </BreadcrumbItem>
 
-          {Auth.loggedIn() ? (
+          {!error ? (
             <>
+              {data?.user?.role === 'Parent' ? (
+                <>
+                  <BreadcrumbItem>
+                    <Box
+                      as={Link}
+                      to="/family-profile"
+                      _hover={{ color: "blue.500" }}
+                      style={{ color: 'gray.600', textDecoration: 'none' }}
+                    >
+                      Family Profile
+                    </Box>
+                  </BreadcrumbItem>
+                  <ChevronRightIcon color='gray.500' />
+                </>
+              ) : (
+                <>
+                  <BreadcrumbItem>
+                    <Box
+                      as={Link}
+                      to="/child-profile"
+                      _hover={{ color: "blue.500" }}
+                      style={{ color: 'gray.600', textDecoration: 'none' }}
+                    >
+                      Child Profile
+                    </Box>
+                  </BreadcrumbItem>
+                  <ChevronRightIcon color='gray.500' />
+                </>
+              )}
 
-              <BreadcrumbItem>
-                <Box
-                  as={Link}
-                  to="/family-profile"
-                  _hover={{ color: "blue.500" }}
-                  style={{ color: 'gray.600', textDecoration: 'none' }}
-                >
-                  Family Profile
-                </Box>
-              </BreadcrumbItem>
-              <ChevronRightIcon color='gray.500' />
-              <BreadcrumbItem>
-                <Box
-                  as={Link}
-                  to="/child-profile"
-                  _hover={{ color: "blue.500" }}
-                  style={{ color: 'gray.600', textDecoration: 'none' }}
-                >
-                  Child Profile
-                </Box>
-              </BreadcrumbItem>
-              <ChevronRightIcon color='gray.500' />
               <BreadcrumbItem>
                 <Box
                   as={Link}
@@ -61,10 +113,12 @@ const AppNavbar = () => {
                   Sign out
                 </Box>
               </BreadcrumbItem>
+
               <ChevronRightIcon color='gray.500' />
               <Box>
                 <h2>Hello {user.username}</h2>
               </Box>
+
             </>
           ) : (
             <>
@@ -90,11 +144,15 @@ const AppNavbar = () => {
                   Sign up
                 </Box>
               </BreadcrumbItem>
-              <ChevronRightIcon color='gray.500' />
             </>
           )}
 
         </Breadcrumb>
+        {Auth.loggedIn() && (
+            <Box>
+              <h2>You are logged in as {user.username}</h2>
+            </Box>
+        )}
       </Flex>
 
 

@@ -18,20 +18,21 @@ ChartJS.register(
     Tooltip,
     
 )
-const ProgressBar = function () {
+const ProgressBar = function ({ child = {} }) {
+    // console.log("ProgressBar child prop:", child)
     const data = {
         labels: ['Earnings v Goal'],
-        dataset: [
+        datasets: [
             {
                 label: 'Earnings',
-                data: [10],
+                data: [child.totalEarnings],
                 borderColor: 'black',
                 backgroundColor: 'aqua',
                 borderWidth: 1
             },
             {
                 label: 'Goal',
-                data: [50],
+                data: [child.goal],
                 borderColor: 'black',
                 backgroundColor: 'pink',
                 borderWidth: 1

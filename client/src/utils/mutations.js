@@ -65,6 +65,22 @@ export const ADD_CHORE = gql`
 }
   
 `;
+export const DELETE_CHORE = gql`
+  mutation deleteChore($userId: ID!, $choreId: ID!) {
+    deleteChore(userId: $userId, choreId: $choreId) {
+      username
+      chores {
+        userId
+        complete
+        choreId
+        payRate
+        dueDate
+        description
+      }
+  }
+}
+  
+`;
 
 
 export const COMPLETE_CHORE = gql`
@@ -92,4 +108,17 @@ export const UPDATE_USER = gql`
   }
 `;
 
-
+export const UPDATE_CHORE = gql`
+mutation updateChore($input: ChoreUpdateInput) {
+  updateChore(input: $input) {
+    _id
+    username
+    chores {
+      description
+      payRate
+      dueDate
+      userId
+    }
+  }
+}
+`;

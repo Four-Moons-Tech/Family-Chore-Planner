@@ -22,10 +22,16 @@ const choreSchema = new Schema(
         dueDate: {
             type: Date, 
             required: true,
-            default: '2000-01-01'
-            // get:(date)=>{
-            //     return date.toISOString().split("T")[0]
-            // }
+            default: '2000-01-01',
+            get: (date)=>{
+                const val = new Date(date)
+                let str = `
+                ${val.getFullYear()} /
+                ${val.getMonth()+1} /
+                ${val.getDate()}
+                `
+                return str
+            }
         },     
         complete: {
             type: Boolean,

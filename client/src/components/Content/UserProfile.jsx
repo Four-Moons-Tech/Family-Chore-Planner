@@ -1,5 +1,7 @@
 import ProfileAvatar from "./ProfileAvatar";
 import { useState } from "react";
+// import React from 'react'
+// React.useState()
 import {
     ListItem,
     UnorderedList,
@@ -10,16 +12,22 @@ import {
 } from '@chakra-ui/react';
 
 
-function UserProfile(props) {
+function UserProfile({
+    _id,
+    email,
+    age,
+    goal,
+    username,
+}) {
 
-    const {
-        _id,
-        email,
-        age,
-        goal,
-        username,
+    // const {
+    //     _id,
+    //     email,
+    //     age,
+    //     goal,
+    //     username,
         
-    } = props
+    // } = props
 
 
     return (
@@ -36,7 +44,7 @@ function UserProfile(props) {
                         <Heading size='md'>{username}</Heading>
                         <UnorderedList>
                             
-                            <ListItem> {age} years old </ListItem>
+                            <ListItem> {age||'???'} years old </ListItem>
                             <ListItem>{email}</ListItem>
                             <ListItem>{username} is saving for {goal}</ListItem>
                         </UnorderedList>

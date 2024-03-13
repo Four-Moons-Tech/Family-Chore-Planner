@@ -116,6 +116,47 @@ const resolvers = {
       
     },
     
+    deleteChore: async (parent, { userId, choreId  }) => {
+      try {
+        // const chore = await Chore.create(choreinput);
+        console.log("chore", choreId)
+        const userWithChores = await User.findOneAndUpdate(
+          { _id: userId },
+          { $pull: { chores: { choreId } } },
+          { new: true }
+        );
+
+        return userWithChores;
+
+      } catch (error) {
+        console.log(error)
+      }
+      
+    },
+
+    updateChore: async (parent, {  input  }) => {
+      try {
+        if (!input.userId) throw new Error("input is missing a userId")
+        console.log("input:", input)
+        const userWithUpdatedChore = await User.findOneAndUpdate(
+          { _id: input.userId, 'chores.choreId': input.choreId },
+          { $set: { 
+            'chores.$.description': input.description,
+            'chores.$.payRate': input.payRate,
+            'chores.$.dueDate': input.dueDate,
+           } }, 
+          { new: true }
+        );
+
+        console.log("update:", userWithUpdatedChore)
+        return userWithUpdatedChore;
+
+      } catch (error) {
+        console.log(error)
+      }
+      
+    },
+    
     //IMPORTANT!
     // this mutation needs a userId parameter because...
     // we need to find the USER not the chore...

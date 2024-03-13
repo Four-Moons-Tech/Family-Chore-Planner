@@ -40,7 +40,13 @@ const userSchema = new Schema(
             type: String
         },
         goal:{
-            type: String, 
+            type: Number,
+            default: 20,
+            required: true,
+            set(val) {
+                const result = Number(val)
+                return result || 20
+            } 
         },
 
         children: [
