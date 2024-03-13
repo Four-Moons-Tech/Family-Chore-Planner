@@ -13,7 +13,8 @@ import ChildCard from '../components/Content/ChildCard';
 import {
     useDisclosure,
     Button,
-    Flex
+    Flex,
+    Box
 
 } from '@chakra-ui/react'
 
@@ -29,7 +30,7 @@ const FamilyProfile = () => {
     const children = data?.users || [];
     console.log("this is a child", children[0])
     console.log('data', data)
-   
+
     const { isOpen, onOpen, onClose } = useDisclosure()
     // const {
     //     _id: childId,
@@ -38,11 +39,20 @@ const FamilyProfile = () => {
     // } = child
     return (
 
-        <>
+        <
+            Box
+            minH="100vh"
+            p={8}
+            backgroundImage="url('/images/jason-leung-Xaanw0s0pMk-unsplash.jpg')"
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
+            backgroundSize="cover"
+            bg="blue.50"  
+        >
             <Greeting
-                // _id={childId}
-                // username={username}
-                // lastName={lastName}
+            // _id={childId}
+            // username={username}
+            // lastName={lastName}
             />
             <Button backgroundColor="purple" margin="50px" onClick={onOpen}>Create Child User</Button>
             <AddChildProfile
@@ -50,7 +60,7 @@ const FamilyProfile = () => {
                 onClose={onClose}
             />
             < ChildList children={children} />
-        </>
+            </Box>
 
     )
 }
