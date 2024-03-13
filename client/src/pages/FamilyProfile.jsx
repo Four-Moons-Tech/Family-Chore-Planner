@@ -39,131 +39,35 @@ const FamilyProfile = () => {
     // } = child
     return (
 
-        <
-            Box
+        <Box
             minH="100vh"
-            p={8}
-            backgroundImage="url('/images/jason-leung-Xaanw0s0pMk-unsplash.jpg')"
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
+            p={4}
+            backgroundImage="url('/images/amy-shamblen-fEBBSuFusUU-unsplash.jpg')"
             backgroundSize="cover"
-            bg="blue.50"  
+            backgroundRepeat="no-repeat"
+            backgroundPosition="center center"
+        // bg="yellow.100" //  in case the image fails to load
+
         >
+
+
             <Greeting
             // _id={childId}
             // username={username}
             // lastName={lastName}
             />
-            <Button backgroundColor="purple" margin="50px" onClick={onOpen}>Create Child User</Button>
+            <Button backgroundColor="#432388" color="white" margin="50px" onClick={onOpen}>Create Child User</Button>
             <AddChildProfile
                 isOpen={isOpen}
                 onClose={onClose}
             />
             < ChildList children={children} />
-            </Box>
+
+        </Box>
 
     )
 }
 
-// const user = Auth.getProfile()?.data
-// if (user) {
-//     const payload = {
-//         variables: {
-//             username: user.username
-//         }
-//     }
-//     console.log(payload)
-//     let { data, error } = useQuery(QUERY_USER, payload)
-//     if (error) console.dir(error)
-// }
-
-
-
-
-
-// const [formState, setFormState] = useState({ username: '', password: '' });
-// const [createUser, { error, data }] = useMutation(ADD_USER);
-
-// const handleChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormState({
-//         ...formState,
-//         [name]: value,
-//     });
-// };
-
-// const handleFormSubmit = async (event) => {
-//     event.preventDefault();
-//     try {
-//         const { data } = await createUser({
-//             variables: { ...formState },
-//         });
-//         console.log('User created:', data.createUser);
-//     } catch (e) {
-//         console.error(e);
-//     }
-//     setFormState({
-//         username: '',
-//         password: '',
-//     });
-// };
-
-// return (
-//     <Box className="flex-row justify-center mb-4">
-//         <Box className="col-12 col-lg-10">
-//             <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-//                 <Text as="h4" className="card-header bg-dark text-light p-2">Create Child User</Text>
-//                 <Box p="4">
-//                     {data ? (
-//                         <Text>
-//                             User created successfully!
-//                         </Text>
-//                     ) : (
-//                         <form onSubmit={handleFormSubmit}>
-//                             <Stack spacing={3}>
-//                                 <FormControl>
-//                                     <FormLabel htmlFor="username">Username</FormLabel>
-//                                     <Input
-//                                         id="username"
-//                                         name="username"
-//                                         type="text"
-//                                         value={formState.username}
-//                                         onChange={handleChange}
-//                                     />
-//                                 </FormControl>
-//                                 <FormControl>
-//                                     <FormLabel htmlFor="password">Password</FormLabel>
-//                                     <Input
-//                                         id="password"
-//                                         name="password"
-//                                         type="password"
-//                                         value={formState.password}
-//                                         onChange={handleChange}
-//                                     />
-//                                 </FormControl>
-//                                 <Button
-//                                     type="submit"
-//                                     colorScheme="blue"
-//                                     size="lg"
-//                                     isLoading={false}
-//                                     loadingText="Submitting"
-//                                     style={{ cursor: 'pointer' }}
-//                                 >
-//                                     Create User
-//                                 </Button>
-//                             </Stack>
-//                         </form>
-//                     )}
-//                     {error && (
-//                         <Box mt={3} p={3} bg="red.500" color="white">
-//                             {error.message}
-//                         </Box>
-//                     )}
-//                 </Box>
-//             </Box>
-//         </Box>
-//     </Box>
-// );
 
 
 export default FamilyProfile;

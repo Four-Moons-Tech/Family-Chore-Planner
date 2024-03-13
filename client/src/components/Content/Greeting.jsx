@@ -14,8 +14,9 @@ const Greeting = function(){
 
     return (
 
-        <h1>Welcome, {data?.user?.username}! You belong the {data?.user?.lastName} family!</h1>
+        <h1>Welcome, {data?.user?.username}! You belong to the {data?.user?.lastName} family!</h1>
 
 
-
+    )
+}
 export default Greeting
