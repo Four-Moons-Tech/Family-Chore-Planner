@@ -1,20 +1,19 @@
+import { useQuery } from '@apollo/client'
+import { QUERY_USER } from '../../utils/queries'
 import Auth from '../../utils/auth'
-<utils></utils>;
 
 
-const Greeting = function(props){
-    // const user = Auth.getProfile()?.data
-    // console.log(data)
-    const {
-        _id,
-        lastName,
-        username,
-        
-    } = props
+const Greeting = function(){
+    const user = Auth.getProfile()?.data
+    const { data, loading, error } = useQuery(QUERY_USER, {
+        variables: {
+          username: user?.username
+        }
+      })
 
 
     return (
-        <h1>Welcome,___ { username}! You belong to___ {lastName} family!</h1>
+        <h1>Welcome, {data?.user?.username}! You belong the {data?.user?.lastName} family!</h1>
     )
 }
 

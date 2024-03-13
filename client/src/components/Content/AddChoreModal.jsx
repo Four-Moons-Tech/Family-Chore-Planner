@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from 'react';
-import { ADD_CHORE } from '../../utils/mutations'
+import { ADD_CHORE, UPDATE_CHORE } from '../../utils/mutations'
 // import Auth from '../../auth.js'
 import { useMutation } from '@apollo/client';
 
@@ -18,11 +18,13 @@ import {
 const AddChoreModal = function ({
     isOpen,
     onClose,
-    childId
+    childId,
+    choreToUpdate = null
 }) {
     const [choreFormData, setChoreFormData] = useState({ description: '', payRate: '', dueDate: '', userId: ''});
 
-    const [addChore, { error, data }] = useMutation(ADD_CHORE);
+    const [addChore, { error, data }] = useMutation(choreToUpdate ? UPDATE_CHORE : ADD_CHORE);
+
     if (error) {
         console.log("Error adding chore:", error)
     }
@@ -41,6 +43,10 @@ const AddChoreModal = function ({
                     payRate: Number(choreFormData.payRate),
                     userId: childId
                 }
+            }
+            if (choreToUpdate) {
+                variables.input.choreId = choreToUpdate.choreId
+                variables.input.userId = choreToUpdate.userId
             }
             console.log(variables)
             const test = await addChore({variables});
@@ -69,7 +75,7 @@ const AddChoreModal = function ({
             >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Create user account for your family member</ModalHeader>
+                    <ModalHeader>{choreToUpdate ? 'Updating' : 'Creating'} a chore</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody pb={6}>
                         <form onSubmit={handleFormSubmit}>
@@ -91,7 +97,7 @@ const AddChoreModal = function ({
                                     placeholder='Description'
                                     name='description'
                                     onChange={handleInputChange}
-                                    value={choreFormData.description}
+                                    defaultValue={choreToUpdate?.description}
                                     required
                                 />
                             </div>
@@ -103,7 +109,7 @@ const AddChoreModal = function ({
                                     placeholder='Pay Rate'
                                     name='payRate'
                                     onChange={handleInputChange}
-                                    value={choreFormData.payRate}
+                                    defaultValue={choreToUpdate?.payRate}
                                     required
                                 />
                             </div>
@@ -115,7 +121,7 @@ const AddChoreModal = function ({
                                     placeholder='Due Date'
                                     name='dueDate'
                                     onChange={handleInputChange}
-                                    value={choreFormData.dueDate}
+                                    defaultValue={choreToUpdate?.dueDate}
                                     required
                                 />
                             </div>

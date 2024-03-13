@@ -13,7 +13,7 @@ const Login = () => {
 
     if (error) {
         console.log("Error logging in:", error.message);
-        setErrorDisplay(error.message);
+        // setErrorDisplay(error.message);
     }
 
     const handleChange = (event) => {
@@ -72,7 +72,7 @@ const Login = () => {
                         </Stack>
                     </form>
                 )}
-                {error && <Text mt={4} color="red.500">{errorDisplay}</Text>}
+                {error && <Text mt={4} color="red.500">{error.message}</Text>}
             </Box>
         </Box>
     );

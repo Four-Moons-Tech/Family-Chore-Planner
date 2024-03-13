@@ -9,12 +9,16 @@ export const QUERY_USER = gql`
       email
       role
       totalEarnings
+      goal
+      age
       children {
         _id
         goal
         password
+        age
       }
       chores {
+        userId
         choreId
         description
         dueDate
@@ -34,12 +38,15 @@ export const QUERY_ALL_USER = gql`
       email
       role
       totalEarnings
+      age
       children {
         _id
+        age
         goal
         password
       }
       chores {
+        userId
         choreId
         description
         dueDate
@@ -53,6 +60,7 @@ export const QUERY_ALL_USER = gql`
 export const QUERY_CHORES = gql`
   query chores {
     chores {
+        userId
         choreId
         description
         dueDate
@@ -66,6 +74,7 @@ export const QUERY_CHORES = gql`
 export const QUERY_SINGLE_CHORE = gql`
   query chore($choreId: ID!) {
     chore(choreId: $choreId) {
+        userId
         choreId
         description
         dueDate
