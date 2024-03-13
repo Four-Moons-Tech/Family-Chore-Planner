@@ -113,6 +113,12 @@ const AppNavbar = () => {
                   Sign out
                 </Box>
               </BreadcrumbItem>
+
+              <ChevronRightIcon color='gray.500' />
+              <Box>
+                <h2>Hello {user.username}</h2>
+              </Box>
+
             </>
           ) : (
             <>
