@@ -61,6 +61,14 @@ This is a group project with the following creators:
 - Anna Chuapetcharasopon: https://github.com/ahgeak 
 - Bryan Chia: https://github.com/bryancz1493 
 
+
+Our tutor Doug assisted us in this Project and helped overcome the challenge we had of displaying the data on the front end. 
+
+https://preply.com/en/tutor/3316660
+
+
+
 ## License
 
 This project uses an MIT license.
+
