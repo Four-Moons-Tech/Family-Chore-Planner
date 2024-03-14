@@ -35,10 +35,7 @@ const server = new ApolloServer({
 const startApolloServer = async () => {
   await server.start();
 
-  // app.use((req, res, next) => {
-  //   console.log(`${req.method} request heard at ${req.url}`)
-  //   next()
-  // })
+  
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
   // app.use(cors())
@@ -65,8 +62,7 @@ const startApolloServer = async () => {
   db.on('error', (err) => {
     // Log the database connection error
     console.error('Database Connection Error:', err);
-    // Optionally, log the error to a file
-    // fs.appendFileSync('error.log', `${new Date().toISOString()}: Database Connection Error: ${err}\n`);
+    
   });
   
 };
